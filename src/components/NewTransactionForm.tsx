@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { TransactionType } from "../app/models/transaction";
 
 interface NewTransactionFormProps {
   onAdd: (newTransaction: { type: TransactionType; amount: number; date: string }) => Promise<void>;
 }
 
-function getToday() {
+function getTodayISO() {
   const today = new Date();
   return today.toISOString().split("T")[0];
 }
@@ -15,21 +15,19 @@ function getToday() {
 export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   const [type, setType] = useState<TransactionType>("depósito");
   const [amount, setAmount] = useState(0);
-  const [date, setDate] = useState(getToday());
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setDate(getToday());
-  }, []);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    await onAdd({ type, amount, date: getToday() });
-    setLoading(false);
+  function resetForm() {
     setType("depósito");
     setAmount(0);
-    setDate(getToday());
+  }
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    await onAdd({ type, amount, date: getTodayISO() });
+    setLoading(false);
+    resetForm();
   }
 
   return (
@@ -55,16 +53,6 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
           className="border rounded px-2 py-1"
           min="0"
           step="0.01"
-          required
-        />
-      </div>
-      <div className="mb-2" style={{ display: 'none' }}>
-        <label className="mr-2">Data:</label>
-        <input
-          type="date"
-          value={date}
-          readOnly
-          className="border rounded px-2 py-1 bg-gray-100 cursor-not-allowed"
           required
         />
       </div>
