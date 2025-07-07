@@ -7,9 +7,7 @@ export const Sidebar = () => {
 			<nav>
 				<ul className="space-y-4">
 					<li><Link href="/" className="hover:text-gray-300">Início</Link></li>
-					<li><Link href="/transactions" className="hover:text-gray-300">Transferências</Link></li>
-					<li><Link href="/investments" className="hover:text-gray-300">Investimentos</Link></li>
-					<li><Link href="/services" className="hover:text-gray-300">Outros serviços</Link></li>
+					<li><Link href="/transactions" className="hover:text-gray-300">Transações</Link></li>
 				</ul>
 			</nav>
 		</aside>
