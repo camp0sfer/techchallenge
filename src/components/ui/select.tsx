@@ -8,22 +8,30 @@ type SelectProps = {
 
 export function Select({ label, options, error, ...props }: SelectProps) {
   return (
-    <div className="flex flex-col gap-1 text-sm font-inter">
-      {label && <label className="font-medium">{label}</label>}
+    <div className="relative">
       <select
         {...props}
-        className={`border px-4 py-3 rounded focus:outline-none focus:ring-2 appearance-none bg-white ${
-          error
-            ? 'border-red-500 ring-red-200'
-            : 'border-green-600 ring-green-200'
-        }`}
+        className={`appearance-none w-full px-4 py-3 pr-10 border rounded-xl bg-white
+      font-inter text-ui-text-primary
+      focus:outline-none focus:ring-2
+      ${
+        error
+          ? "border-feedbackDanger ring-red-200"
+          : "border-brandPrimary ring-blue-200"
+      }
+    `}
       >
-        {options.map(({ label, value }) => (
-          <option key={value} value={value}>
+        {options.map(({ label, value, bold }) => (
+          <option key={value} value={value} className={bold ? "font-bold" : ""}>
             {label}
           </option>
         ))}
       </select>
+
+      {/* Material Symbol Arrow */}
+      <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-ui-text-secondary text-xl">
+        <span className="material-symbols-outlined">expand_more</span>
+      </span>
     </div>
   );
 }

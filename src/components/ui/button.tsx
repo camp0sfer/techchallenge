@@ -1,25 +1,47 @@
 type ButtonProps = {
   children: React.ReactNode;
-  variant?: 'primary' | 'success' | 'danger' | 'neutral';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'success' | 'warning' | 'info' | 'action';
   disabled?: boolean;
   onClick?: () => void;
 };
 
-export function Button({ children, variant = 'success', disabled = false, ...props }: ButtonProps) {
-  const base = 'px-6 py-2 rounded font-semibold transition-all';
-  const styles = {
-    primary: 'bg-[#004D61] text-white hover:bg-black',
-    success: 'bg-green-600 text-white hover:bg-black',
-    danger: 'bg-red-600 text-white hover:bg-black',
-    neutral: 'bg-gray-300 text-black hover:bg-black',
+export function Button({
+  children,
+  variant = 'primary',
+  disabled = false,
+  ...props
+}: ButtonProps) {
+  const base =
+    'px-5 py-2 rounded-lg font-semibold transition-all duration-200 font-inter text-sm leading-5';
+
+  const variants = {
+    primary: 'bg-brandPrimary text-backgroundPrimary hover:bg-brandPrimaryHover',
+    secondary: 'bg-brandSecondary text-backgroundPrimary hover:bg-brandSecondaryHoverr',
+    tertiary: 'bg-brandTertiary text-textPrimary hover:bg-brandTertiaryHover',
+    success: 'bg-feedbackSuccess text-backgroundPrimary',
+    warning: 'bg-feedbackWarning text-backgroundPrimary',
+    danger: 'bg-feedbackDanger text-backgroundPrimary',
+    info: 'bg-feedbackInfo text-backgroundPrimary',
+    action: 'bg-feedbackAction text-backgroundPrimary',
   };
 
-  const finalStyle = disabled
-    ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-    : styles[variant];
+  const disabledStyles = {
+    primary: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+    secondary: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+    tertiary: 'bg-background-muted text-gray-400 cursor-not-allowed',
+    success: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+    warning: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+    danger: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+    info: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+    action: 'bg-gray-200 text-gray-500 cursor-not-allowed',
+  };
 
   return (
-    <button className={`${base} ${finalStyle}`} disabled={disabled} {...props}>
+    <button
+      className={`${base} ${disabled ? disabledStyles[variant] : variants[variant]}`}
+      disabled={disabled}
+      {...props}
+    >
       {children}
     </button>
   );

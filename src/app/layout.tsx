@@ -10,6 +10,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="antialiased">
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+          rel="stylesheet"
+        />
         <Header userName="Joana da Silva Oliveira" />
         <div className="flex">
           <Sidebar

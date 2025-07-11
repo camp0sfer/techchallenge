@@ -3,34 +3,63 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { EditIcon } from "@/components/icons/editIcon";
-import { EyeIcon } from "@/components/icons/eyeIcon";
 import { TrashIcon } from "@/components/icons/trashIcon";
 import { Sidebar } from "@/components/sidebar";
-import { ClosedEyeIcon } from "@/components/icons/closedEyeIcon";
 import { PageContainer } from "@/components/pageContainer";
+import { ToggleGroup } from "@/components/ui/toggle";
+import { useState } from "react";
+import { AvatarIcon } from "@/components/icons/avatarIcon";
+import { ArrowUpIcon } from "@/components/icons/arrowUpIcon";
+import { GearIcon } from "@/components/icons/gearIcon";
+import { ArrowDownIcon } from "@/components/icons/arrowDownIcon";
+import { ArrowRightIcon } from "@/components/icons/arrowRightIcon";
+import { TransactionRow } from "@/components/transaction/transactionRow";
 
 export default function TestComponents() {
+  const [selected, setSelected] = useState("receita");
+
   return (
     <div className="p-8 space-y-6 bg-gray-50 min-h-screen font-inter">
       <h1 className="text-2xl font-bold">Testes de Componentes</h1>
 
       <section className="space-x-4">
         <h2 className="text-lg font-semibold mb-2">Botões</h2>
-        <Button variant="primary">Concluir</Button>
-        <Button variant="success">Concluir</Button>
-        <Button variant="danger">Excluir</Button>
-        <Button variant="neutral" disabled>
-          Inativo
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="tertiary">Tertiary</Button>
+        <Button variant="tertiary" disabled>
+          Disabled
         </Button>
+        <Button variant="success">Success</Button>
+        <Button variant="warning">Warning</Button>
+        <Button variant="danger">Danger</Button>
+        <Button variant="info">Info</Button>
+        <Button variant="action">Action</Button>
       </section>
+      <hr className="my-6 border-t border-gray-300" />
+
+      <h2 className="text-lg font-semibold mb-2">Toggle</h2>
+      <section className="space-x-4">
+        <ToggleGroup
+          value={selected}
+          onChange={setSelected}
+          options={[
+            { label: "Receita", value: "receita", color: "success" },
+            { label: "Despesa", value: "despesa", color: "action" },
+          ]}
+        />
+      </section>
+      <hr className="my-6 border-t border-gray-300" />
 
       <section className="space-y-2">
-        <h2 className="text-lg font-semibold mb-2">Inputs/Select</h2>
+        <h2 className="text-lg font-semibold mb-2">Input</h2>
         <Input label="Nome" placeholder="Digite seu nome" />
         <Input label="Email" error="Campo obrigatório" />
       </section>
+      <hr className="my-6 border-t border-gray-300" />
 
       <section className="space-y-2">
+        <h2 className="text-lg font-semibold mb-2">Select</h2>
         <Select
           label="Tipo de transação"
           options={[
@@ -40,68 +69,95 @@ export default function TestComponents() {
           ]}
         />
       </section>
+      <hr className="my-6 border-t border-gray-300" />
 
       <section>
-        <h2 className="text-lg font-semibold mb-2">Ícones</h2>
-        <div className="flex gap-4 items-center">
-          <EditIcon bgColor="bg-green-500" className="text-white" />
-          <EditIcon bgColor="bg-[#004D61]" className="text-white" />
-          <EyeIcon className="w-6 h-6 text-[#FF5031]" />
-          <ClosedEyeIcon className="w-6 h-6 text-green-500" />
-          <TrashIcon bgColor="bg-[#004D61]" className="text-white" />
-          <TrashIcon bgColor="bg-gray-300" className="text-black" />
+        <h2 className="text-h5 font-semibold mb-sm text-textPrimary">
+          Ícones
+        </h2>
+        <div className="flex gap-md items-center">
+          {/* Edição */}
+          <EditIcon
+            bgColor="bg-feedbackSuccess hover:bg-feedbackSuccessHover"
+            className="text-white"
+          />
+          <EditIcon
+            bgColor="bg-brandPrimary hover:bg-brandPrimaryHover"
+            className="text-white"
+          />
+
+          {/* Lixeira */}
+          <TrashIcon
+            bgColor="bg-brandPrimary hover:bg-brandPrimaryHover"
+            className="text-white"
+          />
+          <TrashIcon
+            bgColor="bg-ui-backgroundSecondary hover:bg-brandTertiaryHover"
+            className="text-textPrimary"
+          />
+
+          {/* Avatar */}
+          <AvatarIcon
+            bgColor="bg-ui-backgroundSecondary hover:bg-brandPrimaryHover"
+            className="text-feedbackAction"
+          />
+          <AvatarIcon bgColor="transparent" className="text-textPrimary" />
+
+          {/* Setas */}
+          <ArrowUpIcon
+            bgColor="bg-backgroundSecondary hover:bg-brandPrimaryHover"
+            className="text-textPrimary hover:text-white"
+          />
+          <ArrowDownIcon
+            bgColor="bg-backgroundSecondary hover:bg-brandPrimaryHover"
+            className="text-textPrimary hover:text-white"
+          />
+          <ArrowRightIcon
+            bgColor="bg-backgroundSecondary hover:bg-brandPrimaryHover"
+            className="text-textPrimary hover:text-white"
+          />
+
+          {/* Engrenagem */}
+          <GearIcon
+            bgColor="bg-brandPrimary hover:bg-brandPrimaryHover"
+            className="text-white"
+          />
         </div>
       </section>
+
+      <hr className="my-6 border-t border-gray-300" />
+
       <section>
-        <h2 className="text-lg font-semibold mb-2">Sidebars</h2>
-        <Sidebar
-          title="Menu Principal"
-          centered={true}
-          showIcons={false}
-          width="w-[300px]" 
-          items={[
-            { label: "Início", active: true },
-            { label: "Transferências" },
-            { label: "Investimentos" },
-            { label: "Outros serviços" },
-          ]}
+        <h2 className="text-lg font-semibold mb-2">Transaction Row</h2>
+        <TransactionRow
+          type="receita"
+          name="Nome da Transação"
+          date="05/07/2025"
+          amount="1.200,00"
+          onEdit={() => console.log("editar")}
+          onDelete={() => console.log("deletar")}
         />
-        <br/>
-        <Sidebar
-          title="Extrato"
-          variant="card"
-          showIcons={false}
-          width="w-[300px]" 
-          titleActions={[
-            <button
-              key="edit"
-              onClick={() => alert("editar")}
-              className="p-1 rounded-full hover:bg-gray-100"
-            >
-              <EditIcon className="text-gray-600" />
-            </button>,
-            <button
-              key="delete"
-              onClick={() => alert("excluir")}
-              className="p-1 rounded-full hover:bg-gray-100"
-            >
-              <TrashIcon className="text-gray-600" />
-            </button>,
-          ]}
-          items={[
-            { label: "Depósito - R$ 150" },
-            { label: "Depósito - R$ 100" },
-            { label: "Transferência - R$ 500" },
-          ]}
+        <TransactionRow
+          type="despesa"
+          name="Nome da Transação"
+          date="05/07/2025"
+          amount="1.200,00"
+          onEdit={() => console.log("editar")}
+          onDelete={() => console.log("deletar")}
         />
       </section>
+      <hr className="my-6 border-t border-gray-300" />
+
       <section>
-        <h2 className="text-lg font-semibold mb-2">Containers</h2>
-        <PageContainer bgColor="bg-[#004d61] text-white w-full max-w-[600px] h-[300px]">
+        <h2 className="text-h5 font-semibold text-textPrimary">
+          Containers
+        </h2>
+
+        <PageContainer bgColor="bg-brandSecondary text-white w-full max-w-[600px] h-[300px]">
           <p>Aqui vai o conteúdo</p>
         </PageContainer>
-        <br/>
-        <PageContainer bgColor="bg-black text-white w-full max-w-[300px] h-[500px]">
+        <br />
+        <PageContainer bgColor="bg-feedbackSuccess text-white w-full max-w-[300px] h-[500px]">
           <p>Aqui vai o conteúdo</p>
         </PageContainer>
       </section>
