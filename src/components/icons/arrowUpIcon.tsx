@@ -15,7 +15,7 @@ export function ArrowUpIcon({
       className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${bgColor}`}
     >
       <span
-        className={`material-symbols-outlined text-white text-xl ${className}`}
+        className={`material-symbols-outlined text-xl ${className}`}
       >
         arrow_upward
       </span>
