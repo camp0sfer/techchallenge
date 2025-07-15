@@ -6,7 +6,7 @@ interface IconProps {
   bgColor?: string;
 }
 
-export function TrashIcon({
+export function ArrowRightIcon({
   className = "",
   bgColor = "transparent",
 }: IconProps) {
@@ -17,7 +17,7 @@ export function TrashIcon({
       <span
         className={`material-symbols-outlined text-xl ${className}`}
       >
-        delete
+        chevron_right
       </span>
     </div>
   );

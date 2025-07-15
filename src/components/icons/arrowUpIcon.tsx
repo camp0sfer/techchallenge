@@ -6,18 +6,18 @@ interface IconProps {
   bgColor?: string;
 }
 
-export function TrashIcon({
+export function ArrowUpIcon({
   className = "",
-  bgColor = "transparent",
+  bgColor = "bg-feedbackSuccess",
 }: IconProps) {
   return (
     <div
-      className={`w-10 h-10 flex items-center justify-center rounded-full ${bgColor}`}
+      className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${bgColor}`}
     >
       <span
         className={`material-symbols-outlined text-xl ${className}`}
       >
-        delete
+        arrow_upward
       </span>
     </div>
   );

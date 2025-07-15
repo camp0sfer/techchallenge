@@ -6,9 +6,9 @@ interface IconProps {
   bgColor?: string;
 }
 
-export function TrashIcon({
+export function AvatarIcon({
   className = "",
-  bgColor = "transparent",
+  bgColor = "bg-gray-200",
 }: IconProps) {
   return (
     <div
@@ -17,7 +17,7 @@ export function TrashIcon({
       <span
         className={`material-symbols-outlined text-xl ${className}`}
       >
-        delete
+        account_circle
       </span>
     </div>
   );
