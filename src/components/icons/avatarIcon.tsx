@@ -1,24 +1,33 @@
 "use client";
 import React from "react";
+import clsx from "clsx";
 
 interface IconProps {
-  className?: string;
-  bgColor?: string;
+  className?: string;     // controla cor
+  bgColor?: string;       // controla bg
+  size?: string;          // controla tamanho total
 }
 
 export function AvatarIcon({
   className = "",
-  bgColor = "bg-gray-200",
+  bgColor = "transparent",
+  size = "w-10 h-10",
 }: IconProps) {
   return (
     <div
-      className={`w-10 h-10 flex items-center justify-center rounded-full ${bgColor}`}
+      className={clsx(
+        "inline-flex items-center justify-center rounded-full",
+        bgColor,
+        size
+      )}
     >
       <span
-        className={`material-symbols-outlined text-xl ${className}`}
+        className={clsx("material-symbols-outlined", className)}
+          style={{ fontSize: "32px" }} 
       >
         account_circle
       </span>
     </div>
   );
 }
+
