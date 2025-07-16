@@ -25,24 +25,31 @@ export function TransactionRow({
   const isReceita = type === "receita";
   const Icon = isReceita ? ArrowUpIcon : ArrowDownIcon;
 
-  return (
-    <div className="flex items-center justify-between py-4 border-b border-ui-background-secondary font-inter text-sm text-ui-text-primary">
-      <div className="flex items-center gap-sm">
-        <div className={`rounded-full p-2`}>
-          <Icon className="text-white" />
-        </div>
-        <span className="font-semibold">{name}</span>
+ return (
+  <div className="grid grid-cols-4 items-center py-4 border-b border-backgroundSecondary font-inter text-sm text-textPrimary">
+    {/* Transação */}
+    <div className="flex items-center gap-sm">
+      <div className="rounded-full p-2">
+        <Icon className="text-white" />
       </div>
-      <div className="flex items-center gap-md">
-        <span>{date}</span>
-        <span className="font-bold">R$ {amount}</span>
-        <button onClick={onEdit}>
-          <EditIcon className="text-textPrimary hover:text-feedbackInfo" />
-        </button>
-        <button onClick={onDelete}>
-          <TrashIcon className="text-textPrimary hover:text-feedbackDanger" />
-        </button>
-      </div>
+      <span className="font-semibold">{name}</span>
     </div>
-  );
+
+    {/* Data */}
+    <span>{date}</span>
+
+    {/* Valor */}
+    <span className="font-bold">R$ {amount}</span>
+
+    {/* Ações */}
+    <div className="flex items-center gap-sm">
+      <button onClick={onEdit}>
+        <EditIcon className="text-textPrimary hover:text-feedbackInfo" />
+      </button>
+      <button onClick={onDelete}>
+        <TrashIcon className="text-textPrimary hover:text-feedbackDanger" />
+      </button>
+    </div>
+  </div>
+);
 }
