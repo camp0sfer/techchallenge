@@ -1,24 +1,35 @@
-import React from 'react';
-import { UserCircle2 } from 'lucide-react'; // ou outro ícone que preferir
+"use client";
 
-interface HeaderProps {
+import Image from "next/image";
+import { AvatarIcon } from "../icons/avatarIcon";
+
+type HeaderProps = {
   userName: string;
-}
+};
 
-export const Header: React.FC<HeaderProps> = ({ userName }) => {
+export function Header({ userName }: HeaderProps) {
   return (
-    <header className="w-full bg-[#0A2A4D] text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <header className="w-full h-[80px] bg-brandSecondary text-backgroundPrimary px-lg py-sm flex items-center justify-between font-inter">
       {/* Logo */}
-      <div className="flex items-center space-x-2">
-        <div className="w-4 h-4 bg-green-400 rounded-sm" />
-        <span className="text-lg font-semibold">bytebank</span>
+      <div className="flex items-center gap-xs">
+        <Image
+          src="/logo_bytebank.png"
+          alt="Bytebank Logo"
+          width={180}
+          height={32}
+          priority
+        />
       </div>
 
-      {/* Nome do usuário + ícone */}
-      <div className="flex items-center space-x-2">
-        <span className="text-sm md:text-base">{userName}</span>
-        <UserCircle2 size={20} />
+      {/* Nome do usuário e avatar */}
+      <div className="flex items-center gap-xs">
+        <span className="text-sm">{userName}</span>
+        <AvatarIcon
+          className="text-backgroundPrimary text-[26px]"
+          bgColor="bg-transparent"
+          size="w-[36px] h-[36px]"
+        />
       </div>
     </header>
   );
-};
+}
