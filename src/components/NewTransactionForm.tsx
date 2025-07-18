@@ -14,19 +14,30 @@ function getTodayISO() {
 
 export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   const [type, setType] = useState<TransactionType>("depósito");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  function formatToBRL(value: string) {
+    const num = Number(value.replace(/\D/g, "")) / 100;
+    if (isNaN(num)) return "";
+    return num.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  }
+
+  function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const raw = e.target.value.replace(/\D/g, "");
+    setAmount(raw);
+  }
   function resetForm() {
     setType("depósito");
-    setAmount(0);
+    setAmount("");
   }
 
   async function confirmTransaction() {
     setLoading(true);
     setShowModal(false);
-    await onAdd({ type, amount, date: getTodayISO() });
+    const valorNumerico = Number(amount) / 100;
+    await onAdd({ type, amount: valorNumerico, date: getTodayISO() });
     setLoading(false);
     resetForm();
   }
@@ -34,7 +45,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (amount <= 0) return;
+    if (!amount || Number(amount) <= 0) return;
     setShowModal(true); // Abre modal ao invés de enviar direto
   }
 
@@ -47,13 +58,13 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
         <div className="mb-4">
           <label className="block mb-1 text-sm text-gray-700">Valor</label>
           <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            type="text"
+            value={amount ? formatToBRL(amount) : ""}
+            onChange={handleAmountChange}
             className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-            min="0"
-            step="0.01"
+            inputMode="numeric"
             required
+            placeholder="Digite aqui o valor da transação"
           />
         </div>
 
