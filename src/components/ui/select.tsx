@@ -12,7 +12,7 @@ export function Select({ label, options, error, ...props }: SelectProps) {
       <select
         {...props}
         className={`appearance-none w-full px-4 py-3 pr-10 border rounded-xl bg-white
-      font-inter text-ui-text-primary
+      font-inter text-sm md:text-base text-ui-text-primary
       focus:outline-none focus:ring-2
       ${
         error
@@ -22,7 +22,7 @@ export function Select({ label, options, error, ...props }: SelectProps) {
     `}
       >
         {options.map(({ label, value, bold }) => (
-          <option key={value} value={value} className={bold ? "font-bold" : ""}>
+          <option key={value} value={value} className={`${bold ? "font-bold" : ""} text-sm md:text-base`}>
             {label}
           </option>
         ))}

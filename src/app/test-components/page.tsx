@@ -19,10 +19,13 @@ export default function TestComponents() {
   const [selected, setSelected] = useState("receita");
 
   return (
-    <div className="p-8 space-y-6 bg-gray-50 min-h-screen font-inter">
+    <div className="w-full max-[640px]:w-[90vw] bg-gray-50 p-8 space-y-6 min-h-screen font-inter">
+
+
       <h1 className="text-2xl font-bold">Testes de Componentes</h1>
 
-      <section className="space-x-4">
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <h2 className="text-lg font-semibold mb-2">Botões</h2>
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
@@ -39,7 +42,8 @@ export default function TestComponents() {
       <hr className="my-6 border-t border-gray-300" />
 
       <h2 className="text-lg font-semibold mb-2">Toggle</h2>
-      <section className="space-x-4">
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <ToggleGroup
           value={selected}
           onChange={setSelected}
@@ -51,14 +55,16 @@ export default function TestComponents() {
       </section>
       <hr className="my-6 border-t border-gray-300" />
 
-      <section className="space-y-2">
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <h2 className="text-lg font-semibold mb-2">Input</h2>
         <Input label="Nome" placeholder="Digite seu nome" />
         <Input label="Email" error="Campo obrigatório" />
       </section>
       <hr className="my-6 border-t border-gray-300" />
 
-      <section className="space-y-2">
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <h2 className="text-lg font-semibold mb-2">Select</h2>
         <Select
           label="Tipo de transação"
@@ -71,9 +77,11 @@ export default function TestComponents() {
       </section>
       <hr className="my-6 border-t border-gray-300" />
 
-      <section>
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <h2 className="text-h5 font-semibold mb-sm text-textPrimary">Ícones</h2>
-        <div className="flex gap-md items-center">
+        <div className="flex flex-wrap gap-md items-center">
+
           {/* Edição */}
           <EditIcon
             bgColor="bg-feedbackSuccess hover:bg-feedbackSuccessHover"
@@ -125,7 +133,8 @@ export default function TestComponents() {
 
       <hr className="my-6 border-t border-gray-300" />
 
-      <section>
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <h2 className="text-lg font-semibold mb-2">Transaction Row</h2>
         <TransactionRow
           type="receita"
@@ -146,7 +155,8 @@ export default function TestComponents() {
       </section>
       <hr className="my-6 border-t border-gray-300" />
 
-      <section>
+      <section className="space-x-4 max-w-full overflow-x-auto">
+
         <h2 className="text-h5 font-semibold text-textPrimary">Containers</h2>
         <PageContainer
           variant="highlight"
@@ -158,7 +168,7 @@ export default function TestComponents() {
           variant="sectioned"
           title="Últimas transações"
           subtitle="Ver extrato completo"
-          className="w-[1200px]"
+          className="max-w-[1200px] w-full"
         >
           <TransactionRow
             type="receita"

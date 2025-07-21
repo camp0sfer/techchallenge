@@ -23,7 +23,7 @@ export function Header({ userName }: HeaderProps) {
 
       {/* Nome do usuário e avatar */}
       <div className="flex items-center gap-xs">
-        <span className="text-sm">{userName}</span>
+        <span className="text-sm hidden sm:inline">{userName}</span>
         <AvatarIcon
           className="text-backgroundPrimary text-[26px]"
           bgColor="bg-transparent"

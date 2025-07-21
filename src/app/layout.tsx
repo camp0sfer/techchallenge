@@ -16,17 +16,6 @@ export default function RootLayout({
         />
         <Header userName="Joana da Silva Oliveira" />
         <div className="flex">
-          <Sidebar
-            title=""
-            variant="default"
-            centered={true}
-            items={[
-              { label: "Início", active: true },
-              { label: "Transferências" },
-              { label: "Investimentos" },
-              { label: "Outros serviços" },
-            ]}
-          />
           <main className="flex-1 p-6">{children}</main>
         </div>
       </body>

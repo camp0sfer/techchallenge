@@ -9,7 +9,7 @@ export function Input({ label, error, ...props }: InputProps) {
       {label && <label className="font-semibold">{label}</label>}
       <input
         {...props}
-        className={`px-4 py-3 border rounded-xl font-inter text-ui-text-primary placeholder-ui-text-secondary
+        className={`px-4 py-3 border rounded-xl font-inter text-sm md:text-base text-ui-text-primary placeholder-ui-text-secondary
         focus:outline-none focus:ring-2
         ${
           error
