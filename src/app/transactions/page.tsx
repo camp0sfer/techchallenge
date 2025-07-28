@@ -1,12 +1,10 @@
 "use client";
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { JsonService } from '../services/jsonService';
 import type { Transaction } from '../models/transaction';
 import { TransactionRow } from '@/components/transaction/transactionRow';
 import { EditTransactionModal } from './edit/[id]/page';
-import { BalanceCard } from '@/components/balanceCard/BalanceCard';
 import { PageContainer } from '@/components/pageContainer';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -53,13 +51,6 @@ export default function TransactionsPage() {
     if (t.type === "transferência") return acc - t.amount;
     return acc;
   }, 0);
-
-  // Converte data ISO para dd/mm/yyyy
-  function formatDate(dateStr: string) {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("pt-BR");
-  }
-
 
   return (
 
