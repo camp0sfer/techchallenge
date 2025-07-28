@@ -48,7 +48,7 @@ export default function HomePage() {
       {/* Card superior com saldo */}
       <PageContainer
         variant="highlight"
-        title="Joana"
+        title="Olá Joana"
         subtitle={loading ? "Carregando..." : currencyFormatter.format(balance)}
       />
 

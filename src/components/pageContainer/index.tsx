@@ -2,6 +2,7 @@
 import React from "react";
 import clsx from "clsx";
 import { ArrowRightIcon } from "../icons/arrowRightIcon";
+import { usePathname } from "next/navigation";
 
 type PageContainerVariant = "highlight" | "sectioned" | "form";
 
@@ -25,6 +26,7 @@ export function PageContainer({
   subtitle,
 }: PageContainerProps) {
   const baseClasses = "relative p-4 sm:p-10 mb-6";
+  const pathname = usePathname();
 
   const variantClasses = {
     highlight: clsx(
@@ -42,11 +44,13 @@ export function PageContainer({
   const renderHighlight = () => (
     <div className="flex flex-col gap-sm z-10 max-w-full sm:max-w-[600px]">
       <h1 className="text-xl sm:text-h1 font-bold text-backgroundPrimary font-jakarta">
-        Olá, {title}!
+         {title}
       </h1>
+      {pathname === "/" && (
       <p className="text-base sm:text-h4 text-backgroundPrimary font-jakarta -mt-2">
         Bem-vindo(a) de volta
       </p>
+    )}
       <p className="text-sm sm:text-md text-backgroundPrimary mt-sm font-jakarta">
         Este é o resumo da sua vida financeira.
       </p>

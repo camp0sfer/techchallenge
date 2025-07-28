@@ -1,4 +1,6 @@
 import { TransactionType } from "@/app/models/transaction";
+import { Input } from "@/components/ui/input";
+import { Select } from "@/components/ui/select";
 import { useState, useEffect } from "react";
 
 
@@ -17,6 +19,10 @@ interface EditTransactionModalProps {
 export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: EditTransactionModalProps) {
   const [type, setType] = useState<TransactionType>("depósito");
   const [amount, setAmount] = useState("");
+  const transactionOptions = [
+    { label: "Depósito", value: "depósito", bold: true },
+    { label: "Transferência", value: "transferência", bold: true },
+  ];
 
   useEffect(() => {
     if (transaction) {
@@ -64,29 +70,27 @@ export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: E
       <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-[#0A2A4D]">Editar Transação</h2>
 
-        <label className="block mb-2 font-medium text-sm text-gray-700">
-          Tipo de transação
-          <select
+        <div className="mb-4">
+          <Select
+            label="Tipo de transação"
             value={type}
             onChange={(e) => setType(e.target.value as TransactionType)}
-            className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-          >
-            <option value="depósito">Depósito</option>
-            <option value="transferência">Transferência</option>
-          </select>
-        </label>
+            options={transactionOptions}
+          />
+        </div>
 
-        <label className="block mb-4 font-medium text-sm text-gray-700">
-          Valor
-          <input
+        <div className="mb-4">
+          <Input
+            label="Valor"
             type="text"
             value={amount}
             onChange={(e) => setAmount(formatBRLInput(e.target.value))}
-            className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
-            placeholder="0,00"
-            inputMode="decimal"
+            className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
+            inputMode="numeric"
+            required
+            placeholder="Digite aqui o valor da transação"
           />
-        </label>
+        </div>
 
         <div className="flex justify-end gap-3">
           <button

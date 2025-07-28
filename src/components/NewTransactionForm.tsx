@@ -52,7 +52,6 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
     date: getTodayISO(),
   };
 
-  console.log("📤 Enviando transação:", transactionData); // 👈 AQUI
 
   await onAdd(transactionData);
   setLoading(false);
@@ -105,7 +104,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
 
       {/* Modal de Confirmação */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
             <h3 className="text-lg font-semibold mb-4">Confirmar transação</h3>
             <p className="mb-6">Tem certeza que deseja adicionar esta transação?</p>

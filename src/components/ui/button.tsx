@@ -13,7 +13,7 @@ export function Button({
     'px-5 py-2 rounded-lg font-semibold transition-all duration-200 font-inter text-sm leading-5';
 
   const variants = {
-    primary: 'bg-brandPrimary text-backgroundPrimary hover:bg-brandPrimaryHover',
+    primary: 'bg-brandPrimary text-backgroundPrimary hover:bg-brandPrimaryHover w-full',
     secondary: 'bg-brandSecondary text-backgroundPrimary hover:bg-brandSecondaryHoverr',
     tertiary: 'bg-brandTertiary text-textPrimary hover:bg-brandTertiaryHover',
     success: 'bg-feedbackSuccess text-backgroundPrimary',

@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { ArrowUpIcon } from './icons/arrowUpIcon';
-import { ArrowDownIcon } from './icons/arrowDownIcon';
 import { TransactionRow } from './transaction/transactionRow';
 
 interface Transaction {
@@ -43,10 +41,8 @@ export default function Statement({ transactions, limit = 4 }: StatementProps) {
               key={t.id}
               type={t.type}
               name={t.name || 'Nome da Transação'}
-              date={t.date}
+              date={new Date(t.date).toLocaleDateString('pt-BR')}
               amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
-              onEdit={() => console.log(`editar transação ${t.id}`)}
-              onDelete={() => console.log(`deletar transação ${t.id}`)}
             />
           ))}
         </div>
