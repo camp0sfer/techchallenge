@@ -4,10 +4,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { JsonService } from '../services/jsonService';
 import type { Transaction } from '../models/transaction';
+import { TransactionRow } from '@/components/transaction/transactionRow';
+import { EditTransactionModal } from './edit/[id]/page';
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   async function fetchTransactions() {
     const list = await JsonService.list();
@@ -24,18 +27,34 @@ export default function TransactionsPage() {
     fetchTransactions();
   }
 
-  const currencyFormatter = new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
+  async function handleSave(updated: { id: number; type: "transferência" | "depósito"; amount: number }) {
+    // Aqui você atualizaria o backend, por exemplo:
+    await JsonService.update(updated.id, updated);
+
+    setEditingTransaction(null);
+    fetchTransactions(); // recarrega lista
+  }
+
+  // Formatação de moeda BRL, retornando string como "1.234,56"
+  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
     minimumFractionDigits: 2,
   });
 
   // Cálculo do saldo total
   const balance = transactions.reduce((acc, t) => {
-    if (t.type === 'depósito') return acc + t.amount;
-    if (t.type === 'transferência') return acc - t.amount;
+    if (t.type === "depósito") return acc + t.amount;
+    if (t.type === "transferência") return acc - t.amount;
     return acc;
   }, 0);
+
+  // Converte data ISO para dd/mm/yyyy
+  function formatDate(dateStr: string) {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("pt-BR");
+  }
+  
 
   return (
     <main className="min-h-screen bg-[#E6F0FA] p-6">
@@ -63,52 +82,39 @@ export default function TransactionsPage() {
         </div>
       </section>
 
-      {/* Tabela de transações */}
-      <section className="bg-white rounded-xl shadow-md p-6">
-        <table className="w-full text-sm text-left">
-          <thead>
-            <tr className="bg-[#E6F0FA] text-[#0A2A4D]">
-              <th className="py-2 px-3 rounded-tl-xl">Tipo</th>
-              <th className="py-2 px-3">Valor</th>
-              <th className="py-2 px-3">Data</th>
-              <th className="py-2 px-3">Ações</th>
-              <th className="py-2 px-3 rounded-tr-xl"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.length === 0 && (
-              <tr>
-                <td colSpan={5} className="py-6 text-center text-gray-400">
-                  Nenhuma transação encontrada.
-                </td>
-              </tr>
-            )}
-            {transactions.map(t => (
-              <tr key={t.id} className="border-b last:border-b-0 hover:bg-[#F5FAFF] transition">
-                <td className="py-2 px-3 font-semibold">{t.type}</td>
-                <td className="py-2 px-3 text-lime-600 font-bold">{currencyFormatter.format(t.amount)}</td>
-                <td className="py-2 px-3">{t.date}</td>
-                <td className="py-2 px-3">
-                  <Link
-                    href={`/transactions/edit/${t.id}`}
-                    className="text-yellow-600 hover:underline mr-2"
-                  >
-                    Editar
-                  </Link>
-                  <button
-                    className="text-red-600 hover:underline bg-none border-none cursor-pointer"
-                    onClick={() => setDeleteId(t.id)}
-                  >
-                    Deletar
-                  </button>
-                </td>
-              </tr>
-            ))}
-
-          </tbody>
-
-        </table>
+      {/* Lista de transações com TransactionRow */}
+      <section className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto">
+        <h2 className="text-lg font-semibold mb-4 text-[#0A2A4D]">Últimas Transações</h2>
+        {transactions.length === 0 ? (
+          <p className="text-gray-400">Nenhuma transação encontrada.</p>
+        ) : (
+          transactions
+            .slice()
+            .reverse()
+            .map((t) => (
+              <TransactionRow
+                key={t.id}
+                type={t.type}
+                date={t.date}
+                amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
+                onEdit={() => setEditingTransaction(t)}
+                onDelete={() => setDeleteId(t.id)}
+              />
+            ))
+        )}
       </section>
+
+      <EditTransactionModal
+        isOpen={!!editingTransaction}
+        transaction={editingTransaction ? {
+          id: editingTransaction.id,
+          type: editingTransaction.type,
+          amount: editingTransaction.amount,
+        } : null}
+        onClose={() => setEditingTransaction(null)}
+        onSave={handleSave}
+      />
+
       {/* Modal de confirmação de exclusão */}
       {deleteId !== null && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-40 z-50">
@@ -124,7 +130,9 @@ export default function TransactionsPage() {
               </button>
               <button
                 className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
-                onClick={() => handleDelete(deleteId)}
+                onClick={() => {
+                  if (deleteId !== null) handleDelete(deleteId);
+                }}
               >
                 Confirmar
               </button>
@@ -133,6 +141,5 @@ export default function TransactionsPage() {
         </div>
       )}
     </main>
-
   );
 }

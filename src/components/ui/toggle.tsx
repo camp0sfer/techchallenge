@@ -27,6 +27,7 @@ export function ToggleGroup({ options, value, onChange }: ToggleGroupProps) {
         return (
           <button
             key={option.value}
+            type="button" 
             onClick={() => onChange(option.value)}
             className={clsx(
               'text-sm px-4 py-2 rounded-md font-semibold transition-all',

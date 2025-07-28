@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from "react";
 import type { TransactionType } from "../app/models/transaction";
+import { ToggleGroup } from "./ui/toggle";
+import { Input } from "./ui/input";
+import { Select } from "./ui/select";
+import { Button } from "./ui/button";
 
 interface NewTransactionFormProps {
   onAdd: (newTransaction: { type: TransactionType; amount: number; date: string }) => Promise<void>;
@@ -17,6 +21,10 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   const [amount, setAmount] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const transactionOptions = [
+    { label: "Depósito", value: "depósito", bold: true },
+    { label: "Transferência", value: "transferência", bold: true },
+  ];
 
   function formatToBRL(value: string) {
     const num = Number(value.replace(/\D/g, "")) / 100;
@@ -34,13 +42,22 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   }
 
   async function confirmTransaction() {
-    setLoading(true);
-    setShowModal(false);
-    const valorNumerico = Number(amount) / 100;
-    await onAdd({ type, amount: valorNumerico, date: getTodayISO() });
-    setLoading(false);
-    resetForm();
-  }
+  setLoading(true);
+  setShowModal(false);
+  const valorNumerico = Number(amount) / 100;
+
+  const transactionData = {
+    type,
+    amount: valorNumerico,
+    date: getTodayISO(),
+  };
+
+  console.log("📤 Enviando transação:", transactionData); // 👈 AQUI
+
+  await onAdd(transactionData);
+  setLoading(false);
+  resetForm();
+}
 
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -56,8 +73,8 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
         <h2 className="text-lg font-semibold text-[#0A2A4D] mb-4">Adicionar nova transação</h2>
 
         <div className="mb-4">
-          <label className="block mb-1 text-sm text-gray-700">Valor</label>
-          <input
+          <Input
+            label="Valor"
             type="text"
             value={amount ? formatToBRL(amount) : ""}
             onChange={handleAmountChange}
@@ -69,24 +86,21 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
         </div>
 
         <div className="mb-4">
-          <label className="block mb-1 text-sm text-gray-700">Selecione o tipo de transação</label>
-          <select
+          <Select
+            label="Tipo de transação"
             value={type}
             onChange={(e) => setType(e.target.value as TransactionType)}
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-          >
-            <option value="depósito">Depósito</option>
-            <option value="transferência">Transferência</option>
-          </select>
+            options={transactionOptions}
+          />
         </div>
 
-        <button
+        <Button
           type="submit"
+          variant="primary"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
           {loading ? "Aguarde..." : "Adicionar Transação"}
-        </button>
+        </Button>
       </form>
 
       {/* Modal de Confirmação */}

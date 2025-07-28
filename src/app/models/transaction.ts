@@ -1,4 +1,4 @@
-export type TransactionType = 'depósito' | 'transferência' | 'pagamento';
+export type TransactionType = 'depósito' | 'transferência';
 
 export class Transaction {
   constructor(

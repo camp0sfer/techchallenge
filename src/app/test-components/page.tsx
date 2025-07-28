@@ -137,7 +137,7 @@ export default function TestComponents() {
 
         <h2 className="text-lg font-semibold mb-2">Transaction Row</h2>
         <TransactionRow
-          type="receita"
+          type="depósito"
           name="Nome da Transação"
           date="05/07/2025"
           amount="1.200,00"
@@ -145,7 +145,7 @@ export default function TestComponents() {
           onDelete={() => console.log("deletar")}
         />
         <TransactionRow
-          type="despesa"
+          type="transferência"
           name="Nome da Transação"
           date="05/07/2025"
           amount="1.200,00"
@@ -171,7 +171,7 @@ export default function TestComponents() {
           className="max-w-[1200px] w-full"
         >
           <TransactionRow
-            type="receita"
+            type="transferência"
             name="Nome da Transação"
             date="05/07/2025"
             amount="1.500,00"
@@ -179,19 +179,19 @@ export default function TestComponents() {
             onDelete={() => console.log("deletar")}
           />
           <TransactionRow
-            type="receita"
+            type="transferência"
             name="Nome da Transação"
             date="05/07/2025"
             amount="980,00"
           />
           <TransactionRow
-            type="despesa"
+            type="transferência"
             name="Nome da Transação"
             date="05/07/2025"
             amount="140,00"
           />
           <TransactionRow
-            type="receita"
+            type="transferência"
             name="Nome da Transação"
             date="04/07/2025"
             amount="160,00"

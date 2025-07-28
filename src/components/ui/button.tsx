@@ -1,9 +1,7 @@
 type ButtonProps = {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'tertiary' | 'danger' | 'success' | 'warning' | 'info' | 'action';
-  disabled?: boolean;
-  onClick?: () => void;
-};
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function Button({
   children,

@@ -24,11 +24,11 @@ export function PageContainer({
   title,
   subtitle,
 }: PageContainerProps) {
-  const baseClasses = "relative p-4 sm:p-6";
+  const baseClasses = "relative p-4 sm:p-10 mb-6";
 
   const variantClasses = {
     highlight: clsx(
-      "w-full sm:w-[1200px] min-h-[280px] sm:h-[314px] rounded-[16px] text-white flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 sm:p-10 p-6",
+      "w-full rounded-[16px] text-white flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 sm:p-10 p-6",
       "bg-gradient-to-r from-brandSecondary to-brandPrimary",
       "relative overflow-hidden"
     ),
@@ -50,7 +50,7 @@ export function PageContainer({
       <p className="text-sm sm:text-md text-backgroundPrimary mt-sm font-jakarta">
         Este é o resumo da sua vida financeira.
       </p>
-  
+
       {/* Versão mobile: valor em uma linha separada */}
       <div className="block sm:hidden mt-2">
         <p className="text-sm text-backgroundPrimary font-jakarta">
@@ -60,7 +60,7 @@ export function PageContainer({
           {subtitle}
         </p>
       </div>
-  
+
       {/* Versão desktop: valor na mesma linha */}
       <p className="hidden sm:block text-sm text-backgroundPrimary font-jakarta">
         Seu saldo atual é{" "}
@@ -70,7 +70,7 @@ export function PageContainer({
       </p>
     </div>
   );
-  
+
 
   const backgroundNoise = (
     <div className="absolute inset-0 z-0 opacity-50 bg-[url('/Noise.png')] bg-cover bg-center pointer-events-none" />
@@ -103,49 +103,49 @@ export function PageContainer({
 
       {variant === "sectioned" ? (
         <>
-         <div className="mb-md">
-  {/* Título */}
-  {title && (
-    <h2 className="text-base sm:text-h5 font-bold text-textPrimary mb-1">{title}</h2>
-  )}
+          <div className="mb-md">
+            {/* Título */}
+            {title && (
+              <h2 className="text-base sm:text-h5 font-bold text-textPrimary mb-1">{title}</h2>
+            )}
 
-  {/* Subtitle - mobile */}
-  {subtitle && (
-    <div className="block sm:hidden">
-      <a
-        href="#"
-        className="flex items-center gap-xxs text-sm text-brandPrimary font-inter"
-      >
-        <span className="hover:underline">{subtitle}</span>
-        <span className="inline-flex w-4 h-4 items-center justify-center group-hover:no-underline">
-          <ArrowRightIcon
-            className="text-brandPrimary text-base"
-            bgColor="bg-transparent"
-          />
-        </span>
-      </a>
-    </div>
-  )}
+            {/* Subtitle - mobile */}
+            {subtitle && (
+              <div className="block sm:hidden">
+                <a
+                  href="#"
+                  className="flex items-center gap-xxs text-sm text-brandPrimary font-inter"
+                >
+                  <span className="hover:underline">{subtitle}</span>
+                  <span className="inline-flex w-4 h-4 items-center justify-center group-hover:no-underline">
+                    <ArrowRightIcon
+                      className="text-brandPrimary text-base"
+                      bgColor="bg-transparent"
+                    />
+                  </span>
+                </a>
+              </div>
+            )}
 
-  {/* Subtitle - desktop */}
-  {subtitle && (
-    <div className="hidden sm:flex justify-between items-center">
-      <div />
-      <a
-        href="#"
-        className="flex items-center gap-xxs text-sm text-brandPrimary font-inter"
-      >
-        <span className="hover:underline">{subtitle}</span>
-        <span className="inline-flex w-4 h-4 items-center justify-center group-hover:no-underline">
-          <ArrowRightIcon
-            className="text-brandPrimary text-base"
-            bgColor="bg-transparent"
-          />
-        </span>
-      </a>
-    </div>
-  )}
-</div>
+            {/* Subtitle - desktop */}
+            {subtitle && (
+              <div className="hidden sm:flex justify-between items-center">
+                <div />
+                <a
+                  href="#"
+                  className="flex items-center gap-xxs text-sm text-brandPrimary font-inter"
+                >
+                  <span className="hover:underline">{subtitle}</span>
+                  <span className="inline-flex w-4 h-4 items-center justify-center group-hover:no-underline">
+                    <ArrowRightIcon
+                      className="text-brandPrimary text-base"
+                      bgColor="bg-transparent"
+                    />
+                  </span>
+                </a>
+              </div>
+            )}
+          </div>
 
 
 
