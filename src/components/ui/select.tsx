@@ -9,6 +9,7 @@ type SelectProps = {
 export function Select({ label, options, error, ...props }: SelectProps) {
   return (
     <div className="relative">
+      {label && <label className="font-semibold">{label}</label>}
       <select
         {...props}
         className={`appearance-none w-full px-4 py-3 pr-10 border rounded-xl bg-white

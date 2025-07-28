@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import { TransactionRow } from './transaction/transactionRow';
 
 interface Transaction {
   id: number;
-  type: string;
+  type: "depósito" | "transferência";
   amount: number;
   date: string;
+  name?: string; // caso precise nome da transação
 }
 
 interface StatementProps {
@@ -12,30 +14,39 @@ interface StatementProps {
   limit?: number;
 }
 
-export default function Statement({ transactions, limit = 5 }: StatementProps) {
+export default function Statement({ transactions, limit = 4 }: StatementProps) {
   const lastTransactions = [...transactions].reverse().slice(0, limit);
+
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
     minimumFractionDigits: 2,
   });
+
   return (
-    <div className="mb-8 p-4 border rounded">
-      <h2 className="text-xl font-semibold mb-2">Extrato</h2>
+    <div className="bg-white p-6 rounded-xl shadow-md max-w-[1200px] w-full">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold text-[#0A2A4D]">Últimas transações</h2>
+        <Link href="/transactions" className="text-sm text-blue-600 hover:underline">
+          Ver extrato completo →
+        </Link>
+      </div>
+
       {lastTransactions.length === 0 ? (
-        <p className="mb-6 text-gray-500">Nenhuma transação encontrada.</p>
+        <p className="text-gray-500">Nenhuma transação encontrada.</p>
       ) : (
-        <ul className="mb-6">
-          {lastTransactions.map(t => (
-            <li key={t.id} className="mb-1">
-              <span className="font-bold">{t.type}</span> — {currencyFormatter.format(t.amount)} — {t.date}
-            </li>
+        <div className="space-y-2">
+          {lastTransactions.map((t) => (
+            <TransactionRow
+              key={t.id}
+              type={t.type}
+              name={t.name || 'Nome da Transação'}
+              date={new Date(t.date).toLocaleDateString('pt-BR')}
+              amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
+            />
           ))}
-        </ul>
+        </div>
       )}
-      <Link href="/transactions" className="text-blue-600 hover:underline">
-        Ver todas as transações
-      </Link>
     </div>
   );
 }

@@ -1,19 +1,19 @@
 "use client";
 
+import { Transaction, TransactionType } from "@/app/models/transaction";
 import { ArrowDownIcon } from "../icons/arrowDownIcon";
 import { ArrowUpIcon } from "../icons/arrowUpIcon";
 import { EditIcon } from "../icons/editIcon";
 import { TrashIcon } from "../icons/trashIcon";
 
 interface TransactionRowProps {
-  type: "receita" | "despesa";
-  name: string;
+  type: TransactionType;
+  name?: string;
   date: string;
   amount: string;
   onEdit?: () => void;
   onDelete?: () => void;
 }
-
 export function TransactionRow({
   type,
   name,
@@ -22,8 +22,8 @@ export function TransactionRow({
   onEdit,
   onDelete,
 }: TransactionRowProps) {
-  const isReceita = type === "receita";
-  const Icon = isReceita ? ArrowUpIcon : ArrowDownIcon;
+  const isDeposito = type === "depósito";
+  const Icon = isDeposito ? ArrowUpIcon : ArrowDownIcon;
 
   return (
     <div className="w-full border-b border-backgroundSecondary py-4 text-xs sm:text-sm text-textPrimary font-inter">
@@ -37,7 +37,7 @@ export function TransactionRow({
             <Icon className="text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold">{name}</span>
+            <span className="font-semibold">{type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}</span>
             <span className="text-xs">{date}</span>
           </div>
         </div>
@@ -61,7 +61,7 @@ export function TransactionRow({
           <div className="rounded-full p-2 bg-transparent">
             <Icon className="text-white" />
           </div>
-          <span className="font-semibold">{name}</span>
+          <span className="font-semibold">{type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()}</span>
         </div>
 
         {/* Data */}

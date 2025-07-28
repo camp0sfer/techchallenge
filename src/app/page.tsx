@@ -5,10 +5,12 @@ import { JsonService } from './services/jsonService';
 import NewTransactionForm from '../components/NewTransactionForm';
 import Statement from '../components/Statement';
 import type { Transaction } from './models/transaction';
+import { PageContainer } from '@/components/pageContainer';
 
 export default function HomePage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     async function fetchTransactions() {
@@ -37,17 +39,31 @@ export default function HomePage() {
     const data = await JsonService.list();
     setTransactions(data);
     setLoading(false);
+    setShowNotification(true); // ← ativa notificação aqui
+    setTimeout(() => setShowNotification(false), 3000);
   }
 
   return (
-    <main className="max-w-xl mx-auto p-6">
-      <div className="mb-8 p-4 border rounded">
-        <h1 className="text-2xl font-bold mb-4">Olá, Joana! :)</h1>
-        <p className="mb-6">Conta Corrente</p>
-        <div className="text-3xl font-mono mb-8">{loading ? '...' : currencyFormatter.format(balance)}</div>
-      </div>
-      {loading ? null : <NewTransactionForm onAdd={handleAddTransaction} />}
-      {loading ? null : <Statement transactions={transactions} />}
+    <main className="min-h-screen bg-[#E6F0FA] p-6">
+      {/* Card superior com saldo */}
+      <PageContainer
+        variant="highlight"
+        title="Olá Joana"
+        subtitle={loading ? "Carregando..." : currencyFormatter.format(balance)}
+      />
+
+      {/* Grid com extrato + nova transação */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {!loading && <Statement transactions={transactions} />}
+        {!loading && <NewTransactionForm onAdd={handleAddTransaction} />}
+      </section>
+
+      {/* 🔔 Notificação visível sempre que ativa */}
+      {showNotification && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-[9999]">
+          Transação concluída com sucesso!
+        </div>
+      )}
     </main>
   );
 }
