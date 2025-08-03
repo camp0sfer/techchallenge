@@ -41,7 +41,7 @@ export default function Statement({ transactions, limit = 4 }: StatementProps) {
               key={t.id}
               type={t.type}
               name={t.name || 'Nome da Transação'}
-              date={new Date(t.date).toLocaleDateString('pt-BR')}
+              date={t.date.split("-").reverse().join("/")}
               amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
             />
           ))}

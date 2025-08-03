@@ -42,20 +42,20 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   }
 
   async function confirmTransaction() {
-  setLoading(true);
-  setShowModal(false);
-  const valorNumerico = Number(amount) / 100;
+    setLoading(true);
+    setShowModal(false);
+    const valorNumerico = Number(amount) / 100;
 
-  const transactionData = {
-    type,
-    amount: valorNumerico,
-    date: getTodayISO(),
-  };
+    const transactionData = {
+      type,
+      amount: valorNumerico,
+      date: getTodayISO(),
+    };
 
 
-  await onAdd(transactionData);
-  setLoading(false);
-  resetForm();
+    await onAdd(transactionData);
+    setLoading(false);
+    resetForm();
 }
 
 

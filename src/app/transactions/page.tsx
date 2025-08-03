@@ -76,7 +76,7 @@ export default function TransactionsPage() {
                 <TransactionRow
                   key={t.id}
                   type={t.type}
-                  date={new Date(t.date).toLocaleDateString('pt-BR')}
+                  date={t.date.split("-").reverse().join("/")}
                   amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
                   onEdit={() => setEditingTransaction(t)}
                   onDelete={() => setDeleteId(t.id)}
