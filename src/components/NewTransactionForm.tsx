@@ -53,9 +53,9 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
     };
 
 
-    await onAdd(transactionData);
-    setLoading(false);
-    resetForm();
+  await onAdd(transactionData);
+  setLoading(false);
+  resetForm();
 }
 
 

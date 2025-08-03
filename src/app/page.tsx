@@ -12,13 +12,14 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [showNotification, setShowNotification] = useState(false);
 
+  async function refreshTransactions() {
+    const data = await JsonService.list();
+    setTransactions(data);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function fetchTransactions() {
-      const data = await JsonService.list();
-      setTransactions(data);
-      setLoading(false);
-    }
-    fetchTransactions();
+    refreshTransactions();
   }, []);
 
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
@@ -36,10 +37,8 @@ export default function HomePage() {
   async function handleAddTransaction(transaction: Omit<Transaction, 'id'>) {
     setLoading(true);
     await JsonService.add(transaction);
-    const data = await JsonService.list();
-    setTransactions(data);
-    setLoading(false);
-    setShowNotification(true); // ← ativa notificação aqui
+    await refreshTransactions();
+    setShowNotification(true);
     setTimeout(() => setShowNotification(false), 3000);
   }
 
@@ -54,7 +53,7 @@ export default function HomePage() {
 
       {/* Grid com extrato + nova transação */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {!loading && <Statement transactions={transactions} />}
+        {!loading && <Statement transactions={transactions} onRefresh={refreshTransactions}/>}
         {!loading && <NewTransactionForm onAdd={handleAddTransaction} />}
       </section>
 
