@@ -66,7 +66,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   }
 
   return (
-    <>
+    <div className="w-full max-w-md mx-auto" >
       {/* Formulário */}
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md relative">
         <h2 className="text-lg font-semibold text-[#0A2A4D] mb-4">Adicionar nova transação</h2>
@@ -92,7 +92,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
             options={transactionOptions}
           />
         </div>
-
+        <div className="lg:w-[195px] md:w-[150px]">
         <Button
           type="submit"
           variant="primary"
@@ -100,6 +100,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
         >
           {loading ? "Aguarde..." : "Adicionar Transação"}
         </Button>
+        </div>
       </form>
 
       {/* Modal de Confirmação */}
@@ -108,24 +109,24 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
           <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
             <h3 className="text-lg font-semibold mb-4">Confirmar transação</h3>
             <p className="mb-6">Tem certeza que deseja adicionar esta transação?</p>
-            <div className="flex justify-center gap-4">
-              <button
+            <div className="w-full flex justify-center">
+            <div className="flex justify-center gap-4 w-[60%]">
+              <Button variant="danger"
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
               >
                 Cancelar
-              </button>
-              <button
+              </Button>
+              <Button variant="primary"
                 onClick={confirmTransaction}
-                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 Confirmar
-              </button>
+              </Button>
+            </div>
             </div>
           </div>
         </div>
       )}
 
-    </>
+    </div>
   );
 }

@@ -56,7 +56,6 @@ export default function TransactionsPage() {
 
     <main className="min-h-screen bg-[#E6F0FA] p-6">
       {/* Card superior com saldo */}
-      <Button variant="secondary" onClick={() => router.push('/')}>Voltar para a Home</Button>
       <div className="mt-6">
         <PageContainer
           variant="highlight"
@@ -64,8 +63,7 @@ export default function TransactionsPage() {
           subtitle={currencyFormatter.format(balance)}
         />
         {/* Lista de transações com TransactionRow */}
-        <section className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto">
-          <h2 className="text-lg font-semibold mb-4 text-[#0A2A4D]">Últimas Transações</h2>
+        <PageContainer variant="sectioned" className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto w-[100%]" exibirExtratoLink={false}>
           {transactions.length === 0 ? (
             <p className="text-gray-400">Nenhuma transação encontrada.</p>
           ) : (
@@ -83,7 +81,7 @@ export default function TransactionsPage() {
                 />
               ))
           )}
-        </section>
+        </PageContainer>
 
         <EditTransactionModal
           isOpen={!!editingTransaction}
@@ -102,22 +100,22 @@ export default function TransactionsPage() {
             <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
               <h3 className="text-lg font-semibold mb-4 text-[#0A2A4D]">Confirmar exclusão</h3>
               <p className="mb-6">Tem certeza que deseja excluir esta transação?</p>
-              <div className="flex justify-center gap-4">
-                <button
-                  className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-[#0A2A4D]"
+              <div className="w-full flex justify-center">
+              <div className="flex justify-center gap-4 w-[60%]">
+                <Button variant="primary"
                   onClick={() => setDeleteId(null)}
                 >
                   Cancelar
-                </button>
-                <button
-                  className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
+                </Button>
+                <Button variant="danger"
                   onClick={() => {
                     if (deleteId !== null) handleDelete(deleteId);
                   }}
                 >
                   Confirmar
-                </button>
+                </Button>
               </div>
+            </div>
             </div>
           </div>
         )}

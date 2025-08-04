@@ -3,6 +3,7 @@ import React from "react";
 import clsx from "clsx";
 import { ArrowRightIcon } from "../icons/arrowRightIcon";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 type PageContainerVariant = "highlight" | "sectioned" | "form";
 
@@ -14,6 +15,7 @@ type PageContainerProps = {
   variant?: PageContainerVariant;
   title?: string;
   subtitle?: string;
+  exibirExtratoLink?: boolean;
 };
 
 export function PageContainer({
@@ -24,6 +26,7 @@ export function PageContainer({
   variant,
   title,
   subtitle,
+  exibirExtratoLink = true,
 }: PageContainerProps) {
   const baseClasses = "relative p-4 sm:p-10 mb-6";
   const pathname = usePathname();
@@ -44,13 +47,13 @@ export function PageContainer({
   const renderHighlight = () => (
     <div className="flex flex-col gap-sm z-10 max-w-full sm:max-w-[600px]">
       <h1 className="text-xl sm:text-h1 font-bold text-backgroundPrimary font-jakarta">
-         {title}
+        {title}
       </h1>
       {pathname === "/" && (
-      <p className="text-base sm:text-h4 text-backgroundPrimary font-jakarta -mt-2">
-        Bem-vindo(a) de volta
-      </p>
-    )}
+        <p className="text-base sm:text-h4 text-backgroundPrimary font-jakarta -mt-2">
+          Bem-vindo(a) de volta
+        </p>
+      )}
       <p className="text-sm sm:text-md text-backgroundPrimary mt-sm font-jakarta">
         Este é o resumo da sua vida financeira.
       </p>
@@ -74,7 +77,6 @@ export function PageContainer({
       </p>
     </div>
   );
-
 
   const backgroundNoise = (
     <div className="absolute inset-0 z-0 opacity-50 bg-[url('/Noise.png')] bg-cover bg-center pointer-events-none" />
@@ -110,7 +112,9 @@ export function PageContainer({
           <div className="mb-md">
             {/* Título */}
             {title && (
-              <h2 className="text-base sm:text-h5 font-bold text-textPrimary mb-1">{title}</h2>
+              <h2 className="text-base sm:text-h5 font-bold text-textPrimary mb-1">
+                {title}
+              </h2>
             )}
 
             {/* Subtitle - mobile */}
@@ -151,9 +155,24 @@ export function PageContainer({
             )}
           </div>
 
-
-
           <div className="bg-backgroundPrimary rounded-lg p-4 overflow-x-auto">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+
+              <h2 className="text-lg font-semibold text-[#0A2A4D]">
+                Últimas transações
+              </h2>
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+
+                {exibirExtratoLink && (
+                  <Link
+                    href="/transactions"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Ver extrato completo →
+                  </Link>
+                )}
+              </div>
+            </div>
             <div className="hidden sm:grid grid-cols-4 items-center text-sm font-semibold text-textPrimary mb-sm px-sm min-w-[560px]">
               <span>Transação</span>
               <span>Data</span>

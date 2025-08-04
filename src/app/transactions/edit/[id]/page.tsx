@@ -1,9 +1,8 @@
 import { TransactionType } from "@/app/models/transaction";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useState, useEffect } from "react";
-
-
 
 interface EditTransactionModalProps {
   isOpen: boolean;
@@ -12,11 +11,20 @@ interface EditTransactionModalProps {
     type: TransactionType;
     amount: number; // valor em número
   } | null;
-  onSave: (updatedTransaction: { id: number; type: TransactionType; amount: number }) => void;
+  onSave: (updatedTransaction: {
+    id: number;
+    type: TransactionType;
+    amount: number;
+  }) => void;
   onClose: () => void;
 }
 
-export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: EditTransactionModalProps) {
+export function EditTransactionModal({
+  isOpen,
+  transaction,
+  onSave,
+  onClose,
+}: EditTransactionModalProps) {
   const [type, setType] = useState<TransactionType>("depósito");
   const [amount, setAmount] = useState("");
   const transactionOptions = [
@@ -68,7 +76,9 @@ export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: E
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
       <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-[#0A2A4D]">Editar Transação</h2>
+        <h2 className="text-xl font-semibold mb-4 text-[#0A2A4D]">
+          Editar Transação
+        </h2>
 
         <div className="mb-4">
           <Select
@@ -91,20 +101,15 @@ export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: E
             placeholder="Digite aqui o valor da transação"
           />
         </div>
-
-        <div className="flex justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-[#0A2A4D]"
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Salvar
-          </button>
+        <div className="w-full flex justify-center">
+          <div className="flex justify-end gap-4 w-[60%]">
+            <Button variant="danger" onClick={onClose}>
+              Cancelar
+            </Button>
+            <Button variant="primary" onClick={handleSave}>
+              Salvar
+            </Button>
+          </div>
         </div>
       </div>
     </div>

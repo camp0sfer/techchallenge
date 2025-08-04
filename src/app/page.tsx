@@ -52,7 +52,7 @@ export default function HomePage() {
       />
 
       {/* Grid com extrato + nova transação */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6">
         {!loading && <Statement transactions={transactions} onRefresh={refreshTransactions}/>}
         {!loading && <NewTransactionForm onAdd={handleAddTransaction} />}
       </section>
