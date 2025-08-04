@@ -6,14 +6,12 @@ import type { Transaction } from '../models/transaction';
 import { TransactionRow } from '@/components/transaction/transactionRow';
 import { EditTransactionModal } from './edit/[id]/page';
 import { PageContainer } from '@/components/pageContainer';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
-  const router = useRouter();
 
   async function fetchTransactions() {
     const list = await JsonService.list();
@@ -56,71 +54,69 @@ export default function TransactionsPage() {
 
     <main className="min-h-screen bg-[#E6F0FA] p-6">
       {/* Card superior com saldo */}
-      <div className="mt-6">
-        <PageContainer
-          variant="highlight"
-          title="Transações e Depósitos"
-          subtitle={currencyFormatter.format(balance)}
-        />
-        {/* Lista de transações com TransactionRow */}
-        <PageContainer variant="sectioned" className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto w-[100%]" exibirExtratoLink={false}>
-          {transactions.length === 0 ? (
-            <p className="text-gray-400">Nenhuma transação encontrada.</p>
-          ) : (
-            transactions
-              .slice()
-              .reverse()
-              .map((t) => (
-                <TransactionRow
-                  key={t.id}
-                  type={t.type}
-                  date={t.date.split("-").reverse().join("/")}
-                  amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
-                  onEdit={() => setEditingTransaction(t)}
-                  onDelete={() => setDeleteId(t.id)}
-                />
-              ))
-          )}
-        </PageContainer>
 
-        <EditTransactionModal
-          isOpen={!!editingTransaction}
-          transaction={editingTransaction ? {
-            id: editingTransaction.id,
-            type: editingTransaction.type,
-            amount: editingTransaction.amount,
-          } : null}
-          onClose={() => setEditingTransaction(null)}
-          onSave={handleSave}
-        />
+      <PageContainer
+        variant="highlight"
+        title="Transações e Depósitos"
+        subtitle={currencyFormatter.format(balance)}
+      />
+      {/* Lista de transações com TransactionRow */}
+      <PageContainer variant="sectioned" className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto w-[100%]" exibirExtratoLink={false}>
+        {transactions.length === 0 ? (
+          <p className="text-gray-400">Nenhuma transação encontrada.</p>
+        ) : (
+          transactions
+            .slice()
+            .reverse()
+            .map((t) => (
+              <TransactionRow
+                key={t.id}
+                type={t.type}
+                date={t.date.split("-").reverse().join("/")}
+                amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
+                onEdit={() => setEditingTransaction(t)}
+                onDelete={() => setDeleteId(t.id)}
+              />
+            ))
+        )}
+      </PageContainer>
 
-        {/* Modal de confirmação de exclusão */}
-        {deleteId !== null && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-            <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
-              <h3 className="text-lg font-semibold mb-4 text-[#0A2A4D]">Confirmar exclusão</h3>
-              <p className="mb-6">Tem certeza que deseja excluir esta transação?</p>
-              <div className="w-full flex justify-center">
-              <div className="flex justify-center gap-4 w-[60%]">
-                <Button variant="primary"
-                  onClick={() => setDeleteId(null)}
-                >
-                  Cancelar
-                </Button>
-                <Button variant="danger"
-                  onClick={() => {
-                    if (deleteId !== null) handleDelete(deleteId);
-                  }}
-                >
-                  Confirmar
-                </Button>
-              </div>
-            </div>
+      <EditTransactionModal
+        isOpen={!!editingTransaction}
+        transaction={editingTransaction ? {
+          id: editingTransaction.id,
+          type: editingTransaction.type,
+          amount: editingTransaction.amount,
+        } : null}
+        onClose={() => setEditingTransaction(null)}
+        onSave={handleSave}
+      />
+
+      {/* Modal de confirmação de exclusão */}
+      {deleteId !== null && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
+            <h3 className="text-lg font-semibold mb-4 text-[#0A2A4D]">Confirmar exclusão</h3>
+            <p className="mb-6">Tem certeza que deseja excluir esta transação?</p>
+            <div className="w-full flex justify-center">
+            <div className="flex justify-center gap-4 w-[60%]">
+              <Button variant="primary"
+                onClick={() => setDeleteId(null)}
+              >
+                Cancelar
+              </Button>
+              <Button variant="danger"
+                onClick={() => {
+                  if (deleteId !== null) handleDelete(deleteId);
+                }}
+              >
+                Confirmar
+              </Button>
             </div>
           </div>
-        )}
-      </div>
-
+          </div>
+        </div>
+      )}
     </main>
   );
 }
