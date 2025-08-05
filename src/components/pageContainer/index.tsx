@@ -28,7 +28,7 @@ export function PageContainer({
   subtitle,
   exibirExtratoLink = true,
 }: PageContainerProps) {
-  const baseClasses = "relative p-4 sm:p-10 mb-6";
+  const baseClasses = "relative p-4 sm:p-10 mb-6 w-full";
   const pathname = usePathname();
 
   const variantClasses = {
@@ -37,10 +37,11 @@ export function PageContainer({
       "bg-gradient-to-r from-brandSecondary to-brandPrimary",
       "relative overflow-hidden"
     ),
-    sectioned: clsx(
-      "bg-white/60 shadow-md rounded-xl p-4 sm:p-6",
-      "flex flex-col gap-md"
-    ),
+sectioned: clsx(
+  "bg-white/60 shadow-md rounded-xl p-4 sm:p-6 w-full",
+  "flex flex-col gap-md"
+),
+
     form: clsx("bg-backgroundPrimary rounded-xl p-4 sm:p-6 shadow-md"),
   };
 
@@ -109,13 +110,26 @@ export function PageContainer({
 
       {variant === "sectioned" ? (
         <>
-          <div className="mb-md">
+          <div>
             {/* Título */}
-            {title && (
-              <h2 className="text-base sm:text-h5 font-bold text-textPrimary mb-1">
-                {title}
+            
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+
+              <h2 className="text-[28px] font-semibold text-[#0A2A4D]">
+                Últimas transações
               </h2>
-            )}
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+
+                {exibirExtratoLink && (
+                  <Link
+                    href="/transactions"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Ver extrato completo →
+                  </Link>
+                )}
+              </div>
+            </div>
 
             {/* Subtitle - mobile */}
             {subtitle && (
@@ -155,25 +169,9 @@ export function PageContainer({
             )}
           </div>
 
-          <div className="bg-backgroundPrimary rounded-lg p-4 overflow-x-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+          <div className="bg-backgroundPrimary rounded-lg p-4 w-full overflow-x-hidden">
 
-              <h2 className="text-lg font-semibold text-[#0A2A4D]">
-                Últimas transações
-              </h2>
-              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-
-                {exibirExtratoLink && (
-                  <Link
-                    href="/transactions"
-                    className="text-sm text-blue-600 hover:underline"
-                  >
-                    Ver extrato completo →
-                  </Link>
-                )}
-              </div>
-            </div>
-            <div className="hidden sm:grid grid-cols-4 items-center text-sm font-semibold text-textPrimary mb-sm px-sm min-w-[560px]">
+            <div className="hidden sm:grid grid-cols-[repeat(4,minmax(0,1fr))] gap-6 items-center text-sm font-semibold text-textPrimary mb-sm pr-sm min-w-[560px] w-[120%]">
               <span>Transação</span>
               <span>Data</span>
               <span>Valor (R$)</span>

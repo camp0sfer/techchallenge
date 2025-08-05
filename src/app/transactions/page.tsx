@@ -26,7 +26,7 @@ export default function TransactionsPage() {
     await JsonService.delete(id);
     setDeleteId(null);
     // onRefresh();
-    fetchTransactions();
+    fetchTransactions(); 
   }
 
   async function handleSave(updated: {
@@ -56,7 +56,7 @@ export default function TransactionsPage() {
 
   return (
 
-    <main className="min-h-screen bg-[#E6F0FA] p-6">
+    <main className="min-h-[80vh] bg-[#E6F0FA] p-6 sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[70%] xl:justify-items-center">
       {/* Card superior com saldo */}
       <PageContainer
         variant="highlight"

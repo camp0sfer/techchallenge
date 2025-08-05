@@ -63,9 +63,9 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto" >
+    <div className="w-full ml-auto sm:max-w-[100%] lg:max-w-[100%] xl:max-w-[90%]" >
       {/* Formulário */}
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md relative">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md relative sm:w-[100%]">
         <h2 className="text-lg font-semibold text-[#0A2A4D] mb-4">Adicionar nova transação</h2>
 
         <div className="mb-4">
@@ -89,7 +89,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
             options={transactionOptions}
           />
         </div>
-        <div className="lg:w-[195px] md:w-[150px]">
+        <div className="lg:w-[195px] md:w-[195px] sm:w-[150px]">
         <Button
           type="submit"
           variant="primary"
