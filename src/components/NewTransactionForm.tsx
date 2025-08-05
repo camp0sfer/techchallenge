@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { TransactionType } from "../app/models/transaction";
-import { ToggleGroup } from "./ui/toggle";
 import { Input } from "./ui/input";
 import { Select } from "./ui/select";
 import { Button } from "./ui/button";
@@ -17,13 +16,13 @@ function getTodayISO() {
 }
 
 export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
-  const [type, setType] = useState<TransactionType>("depósito");
+  const [type, setType] = useState<TransactionType>("deposit");
   const [amount, setAmount] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const transactionOptions = [
-    { label: "Depósito", value: "depósito", bold: true },
-    { label: "Transferência", value: "transferência", bold: true },
+    { label: "Depósito", value: "deposit", bold: true },
+    { label: "Transferência", value: "transfer", bold: true },
   ];
 
   function formatToBRL(value: string) {
@@ -36,28 +35,26 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
     const raw = e.target.value.replace(/\D/g, "");
     setAmount(raw);
   }
+
   function resetForm() {
-    setType("depósito");
+    setType("deposit");
     setAmount("");
   }
 
   async function confirmTransaction() {
     setLoading(true);
     setShowModal(false);
-    const valorNumerico = Number(amount) / 100;
 
     const transactionData = {
       type,
-      amount: valorNumerico,
+      amount: Number(amount) / 100,
       date: getTodayISO(),
     };
 
-
-  await onAdd(transactionData);
-  setLoading(false);
-  resetForm();
-}
-
+    await onAdd(transactionData);
+    setLoading(false);
+    resetForm();
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -1,18 +1,10 @@
-import Link from "next/link";
 import { TransactionRow } from "./transaction/transactionRow";
 import { useEffect, useState } from "react";
 import { JsonService } from "@/app/services/jsonService";
 import { EditTransactionModal } from "@/app/transactions/edit/[id]/page";
 import { PageContainer } from "./pageContainer";
 import { Button } from "./ui/button";
-
-interface Transaction {
-  id: number;
-  type: "depósito" | "transferência";
-  amount: number;
-  date: string;
-  name?: string; // caso precise nome da transação
-}
+import { Transaction } from "@/app/models/transaction";
 
 interface StatementProps {
   transactions: Transaction[];
@@ -25,15 +17,14 @@ export default function Statement({
   limit = 4,
   onRefresh,
 }: StatementProps) {
-  const lastTransactions = [...transactions].reverse().slice(0, limit);
   const [transaction, setTransactions] = useState<Transaction[]>([]);
   const [deleteId, setDeleteId] = useState<number | null>(null);
-  const [editingTransaction, setEditingTransaction] =
-    useState<Transaction | null>(null);
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   async function fetchTransactions() {
     const list = await JsonService.list();
     setTransactions(list);
+    onRefresh();
   }
 
   useEffect(() => {
@@ -43,17 +34,17 @@ export default function Statement({
   async function handleDelete(id: number) {
     await JsonService.delete(id);
     setDeleteId(null);
-    onRefresh();
+    fetchTransactions();
   }
 
   async function handleSave(updated: {
     id: number;
-    type: "transferência" | "depósito";
+    type: "deposit" | "transfer";
     amount: number;
   }) {
     await JsonService.update(updated.id, updated);
     setEditingTransaction(null);
-    onRefresh();
+    fetchTransactions();
   }
 
   const currencyFormatter = new Intl.NumberFormat("pt-BR", {
@@ -78,7 +69,6 @@ export default function Statement({
             <TransactionRow
               key={t.id}
               type={t.type}
-              name={t.name || "Nome da Transação"}
               date={t.date.split("-").reverse().join("/")}
               amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
               onEdit={() => setEditingTransaction(t)}

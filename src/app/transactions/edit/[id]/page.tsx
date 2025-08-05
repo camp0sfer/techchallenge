@@ -25,11 +25,11 @@ export function EditTransactionModal({
   onSave,
   onClose,
 }: EditTransactionModalProps) {
-  const [type, setType] = useState<TransactionType>("depósito");
+  const [type, setType] = useState<TransactionType>("deposit");
   const [amount, setAmount] = useState("");
   const transactionOptions = [
-    { label: "Depósito", value: "depósito", bold: true },
-    { label: "Transferência", value: "transferência", bold: true },
+    { label: "Depósito", value: "deposit", bold: true },
+    { label: "Transferência", value: "transfer", bold: true },
   ];
 
   useEffect(() => {

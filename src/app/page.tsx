@@ -29,8 +29,8 @@ export default function HomePage() {
   });
 
   const balance = transactions.reduce((acc, t) => {
-    if (t.type === 'depósito') return acc + t.amount;
-    if (t.type === 'transferência') return acc - t.amount;
+    if (t.type === 'deposit') return acc + t.amount;
+    if (t.type === 'transfer') return acc - t.amount;
     return acc;
   }, 0);
 

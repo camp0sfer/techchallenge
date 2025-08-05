@@ -25,15 +25,19 @@ export default function TransactionsPage() {
   async function handleDelete(id: number) {
     await JsonService.delete(id);
     setDeleteId(null);
+    // onRefresh();
     fetchTransactions();
   }
 
-  async function handleSave(updated: { id: number; type: "transferência" | "depósito"; amount: number }) {
-    // Aqui você atualizaria o backend, por exemplo:
+  async function handleSave(updated: {
+    id: number;
+    type: "deposit" | "transfer";
+    amount: number;
+  }) {
     await JsonService.update(updated.id, updated);
-
     setEditingTransaction(null);
-    fetchTransactions(); // recarrega lista
+    // onRefresh();
+    fetchTransactions();
   }
 
   // Formatação de moeda BRL, retornando string como "1.234,56"
@@ -45,8 +49,8 @@ export default function TransactionsPage() {
 
   // Cálculo do saldo total
   const balance = transactions.reduce((acc, t) => {
-    if (t.type === "depósito") return acc + t.amount;
-    if (t.type === "transferência") return acc - t.amount;
+    if (t.type === "deposit") return acc + t.amount;
+    if (t.type === "transfer") return acc - t.amount;
     return acc;
   }, 0);
 
@@ -54,12 +58,12 @@ export default function TransactionsPage() {
 
     <main className="min-h-screen bg-[#E6F0FA] p-6">
       {/* Card superior com saldo */}
-
       <PageContainer
         variant="highlight"
         title="Transações e Depósitos"
         subtitle={currencyFormatter.format(balance)}
       />
+
       {/* Lista de transações com TransactionRow */}
       <PageContainer variant="sectioned" className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto w-[100%]" exibirExtratoLink={false}>
         {transactions.length === 0 ? (
