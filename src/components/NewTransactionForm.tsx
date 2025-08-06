@@ -1,74 +1,62 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { TransactionType } from "../app/models/transaction";
-import { ToggleGroup } from "./ui/toggle";
 import { Input } from "./ui/input";
 import { Select } from "./ui/select";
 import { Button } from "./ui/button";
+import { formatToBRL } from "../utils/format";
+import { getTodayISO } from "../utils/date";
 
 interface NewTransactionFormProps {
   onAdd: (newTransaction: { type: TransactionType; amount: number; date: string }) => Promise<void>;
 }
 
-function getTodayISO() {
-  const today = new Date();
-  return today.toISOString().split("T")[0];
-}
-
 export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
-  const [type, setType] = useState<TransactionType>("depósito");
+  const [type, setType] = useState<TransactionType>("deposit");
   const [amount, setAmount] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const transactionOptions = [
-    { label: "Depósito", value: "depósito", bold: true },
-    { label: "Transferência", value: "transferência", bold: true },
+    { label: "Depósito", value: "deposit", bold: true },
+    { label: "Transferência", value: "transfer", bold: true },
   ];
-
-  function formatToBRL(value: string) {
-    const num = Number(value.replace(/\D/g, "")) / 100;
-    if (isNaN(num)) return "";
-    return num.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-  }
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const raw = e.target.value.replace(/\D/g, "");
     setAmount(raw);
   }
+
   function resetForm() {
-    setType("depósito");
+    setType("deposit");
     setAmount("");
   }
 
   async function confirmTransaction() {
     setLoading(true);
     setShowModal(false);
-    const valorNumerico = Number(amount) / 100;
 
     const transactionData = {
       type,
-      amount: valorNumerico,
+      amount: Number(amount) / 100,
       date: getTodayISO(),
     };
 
-
-  await onAdd(transactionData);
-  setLoading(false);
-  resetForm();
-}
-
+    await onAdd(transactionData);
+    setLoading(false);
+    resetForm();
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!amount || Number(amount) <= 0) return;
-    setShowModal(true); // Abre modal ao invés de enviar direto
+    setShowModal(true);
   }
 
   return (
-    <>
+    <div className="w-full ml-auto sm:max-w-[100%] lg:max-w-[100%] xl:max-w-[90%]" >
       {/* Formulário */}
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md relative">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md relative sm:w-[100%]">
         <h2 className="text-lg font-semibold text-[#0A2A4D] mb-4">Adicionar nova transação</h2>
 
         <div className="mb-4">
@@ -92,7 +80,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
             options={transactionOptions}
           />
         </div>
-
+        <div className="lg:w-[195px] md:w-[195px] sm:w-[150px]">
         <Button
           type="submit"
           variant="primary"
@@ -100,6 +88,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
         >
           {loading ? "Aguarde..." : "Adicionar Transação"}
         </Button>
+        </div>
       </form>
 
       {/* Modal de Confirmação */}
@@ -108,24 +97,24 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
           <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full text-center">
             <h3 className="text-lg font-semibold mb-4">Confirmar transação</h3>
             <p className="mb-6">Tem certeza que deseja adicionar esta transação?</p>
-            <div className="flex justify-center gap-4">
-              <button
+            <div className="w-full flex justify-center">
+            <div className="flex justify-center gap-4 w-[60%]">
+              <Button variant="danger"
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400"
               >
                 Cancelar
-              </button>
-              <button
+              </Button>
+              <Button variant="primary"
                 onClick={confirmTransaction}
-                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 Confirmar
-              </button>
+              </Button>
+            </div>
             </div>
           </div>
         </div>
       )}
 
-    </>
+    </div>
   );
 }

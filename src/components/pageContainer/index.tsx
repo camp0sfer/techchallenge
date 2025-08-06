@@ -3,6 +3,7 @@ import React from "react";
 import clsx from "clsx";
 import { ArrowRightIcon } from "../icons/arrowRightIcon";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 type PageContainerVariant = "highlight" | "sectioned" | "form";
 
@@ -14,6 +15,7 @@ type PageContainerProps = {
   variant?: PageContainerVariant;
   title?: string;
   subtitle?: string;
+  exibirExtratoLink?: boolean;
 };
 
 export function PageContainer({
@@ -24,8 +26,9 @@ export function PageContainer({
   variant,
   title,
   subtitle,
+  exibirExtratoLink = true,
 }: PageContainerProps) {
-  const baseClasses = "relative p-4 sm:p-10 mb-6";
+  const baseClasses = "relative p-4 sm:p-10 mb-6 w-full";
   const pathname = usePathname();
 
   const variantClasses = {
@@ -34,23 +37,24 @@ export function PageContainer({
       "bg-gradient-to-r from-brandSecondary to-brandPrimary",
       "relative overflow-hidden"
     ),
-    sectioned: clsx(
-      "bg-white/60 shadow-md rounded-xl p-4 sm:p-6",
-      "flex flex-col gap-md"
-    ),
+sectioned: clsx(
+  "bg-white/60 shadow-md rounded-xl p-4 sm:p-6 w-full",
+  "flex flex-col gap-md"
+),
+
     form: clsx("bg-backgroundPrimary rounded-xl p-4 sm:p-6 shadow-md"),
   };
 
   const renderHighlight = () => (
     <div className="flex flex-col gap-sm z-10 max-w-full sm:max-w-[600px]">
       <h1 className="text-xl sm:text-h1 font-bold text-backgroundPrimary font-jakarta">
-         {title}
+        {title}
       </h1>
       {pathname === "/" && (
-      <p className="text-base sm:text-h4 text-backgroundPrimary font-jakarta -mt-2">
-        Bem-vindo(a) de volta
-      </p>
-    )}
+        <p className="text-base sm:text-h4 text-backgroundPrimary font-jakarta -mt-2">
+          Bem-vindo(a) de volta
+        </p>
+      )}
       <p className="text-sm sm:text-md text-backgroundPrimary mt-sm font-jakarta">
         Este é o resumo da sua vida financeira.
       </p>
@@ -60,7 +64,7 @@ export function PageContainer({
         <p className="text-sm text-backgroundPrimary font-jakarta">
           Seu saldo atual é
         </p>
-        <p className="text-[28px] font-bold text-feedbackSuccess font-jakarta">
+        <p className={`text-[28px] font-bold font-jakarta ${Number(subtitle?.replace(/[^\d\-\.]/g, "")) < 0 ? "text-feedbackDanger" : "text-feedbackSuccess"}`}>
           {subtitle}
         </p>
       </div>
@@ -68,13 +72,12 @@ export function PageContainer({
       {/* Versão desktop: valor na mesma linha */}
       <p className="hidden sm:block text-sm text-backgroundPrimary font-jakarta">
         Seu saldo atual é{" "}
-        <span className="text-feedbackSuccess font-bold text-[36px] font-jakarta">
+        <span className={`font-bold text-[36px] font-jakarta ${Number(subtitle?.replace(/[^\d\-\.]/g, "")) < 0 ? "text-feedbackDanger" : "text-feedbackSuccess"}`}>
           {subtitle}
         </span>
       </p>
     </div>
   );
-
 
   const backgroundNoise = (
     <div className="absolute inset-0 z-0 opacity-50 bg-[url('/Noise.png')] bg-cover bg-center pointer-events-none" />
@@ -107,11 +110,26 @@ export function PageContainer({
 
       {variant === "sectioned" ? (
         <>
-          <div className="mb-md">
+          <div>
             {/* Título */}
-            {title && (
-              <h2 className="text-base sm:text-h5 font-bold text-textPrimary mb-1">{title}</h2>
-            )}
+            
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+
+              <h2 className="text-[28px] font-semibold text-[#0A2A4D]">
+                Últimas transações
+              </h2>
+              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+
+                {exibirExtratoLink && (
+                  <Link
+                    href="/transactions"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Ver extrato completo →
+                  </Link>
+                )}
+              </div>
+            </div>
 
             {/* Subtitle - mobile */}
             {subtitle && (
@@ -151,10 +169,9 @@ export function PageContainer({
             )}
           </div>
 
+          <div className="bg-backgroundPrimary rounded-lg p-4 w-full overflow-x-hidden">
 
-
-          <div className="bg-backgroundPrimary rounded-lg p-4 overflow-x-auto">
-            <div className="hidden sm:grid grid-cols-4 items-center text-sm font-semibold text-textPrimary mb-sm px-sm min-w-[560px]">
+            <div className="hidden sm:grid grid-cols-[repeat(4,minmax(0,1fr))] gap-6 items-center text-sm font-semibold text-textPrimary mb-sm pr-sm min-w-[560px] w-[120%]">
               <span>Transação</span>
               <span>Data</span>
               <span>Valor (R$)</span>

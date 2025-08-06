@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { JsonService } from './services/jsonService';
+import { TransactionService } from './services/transactionService';
 import NewTransactionForm from '../components/NewTransactionForm';
 import Statement from '../components/Statement';
 import type { Transaction } from './models/transaction';
@@ -13,7 +13,7 @@ export default function HomePage() {
   const [showNotification, setShowNotification] = useState(false);
 
   async function refreshTransactions() {
-    const data = await JsonService.list();
+    const data = await TransactionService.list();
     setTransactions(data);
     setLoading(false);
   }
@@ -29,21 +29,21 @@ export default function HomePage() {
   });
 
   const balance = transactions.reduce((acc, t) => {
-    if (t.type === 'depósito') return acc + t.amount;
-    if (t.type === 'transferência') return acc - t.amount;
+    if (t.type === 'deposit') return acc + t.amount;
+    if (t.type === 'transfer') return acc - t.amount;
     return acc;
   }, 0);
 
   async function handleAddTransaction(transaction: Omit<Transaction, 'id'>) {
     setLoading(true);
-    await JsonService.add(transaction);
+    await TransactionService.add(transaction);
     await refreshTransactions();
     setShowNotification(true);
     setTimeout(() => setShowNotification(false), 3000);
   }
 
   return (
-    <main className="min-h-screen bg-[#E6F0FA] p-6">
+    <main className="min-h-[80vh] bg-[#E6F0FA] p-6 sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[100%]">
       {/* Card superior com saldo */}
       <PageContainer
         variant="highlight"
@@ -52,7 +52,7 @@ export default function HomePage() {
       />
 
       {/* Grid com extrato + nova transação */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] xl:gap-0 md:flex md:flex-col md:gap-0 lg:flex lg:flex-col xl:grid ">
         {!loading && <Statement transactions={transactions} onRefresh={refreshTransactions}/>}
         {!loading && <NewTransactionForm onAdd={handleAddTransaction} />}
       </section>

@@ -1,54 +1,39 @@
+import type { EditTransactionModalProps } from "@/interfaces/componentProps";
 import { TransactionType } from "@/app/models/transaction";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useState, useEffect } from "react";
+import { formatToBRL } from "@/utils/format";
 
-
-
-interface EditTransactionModalProps {
-  isOpen: boolean;
-  transaction: {
-    id: number;
-    type: TransactionType;
-    amount: number; // valor em número
-  } | null;
-  onSave: (updatedTransaction: { id: number; type: TransactionType; amount: number }) => void;
-  onClose: () => void;
-}
-
-export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: EditTransactionModalProps) {
-  const [type, setType] = useState<TransactionType>("depósito");
+export function EditTransactionModal({
+  isOpen,
+  transaction,
+  onSave,
+  onClose,
+}: EditTransactionModalProps) {
+  const [type, setType] = useState<TransactionType>("deposit");
   const [amount, setAmount] = useState("");
   const transactionOptions = [
-    { label: "Depósito", value: "depósito", bold: true },
-    { label: "Transferência", value: "transferência", bold: true },
+    { label: "Depósito", value: "deposit", bold: true },
+    { label: "Transferência", value: "transfer", bold: true },
   ];
 
   useEffect(() => {
     if (transaction) {
       setType(transaction.type);
-      setAmount(transaction.amount.toFixed(2).replace(".", ","));
+      setAmount(Math.round(transaction.amount * 100).toString());
     }
   }, [transaction]);
 
-  function formatBRLInput(value: string) {
-    // Remove tudo que não for número ou vírgula
-    let v = value.replace(/[^0-9,]/g, "");
-
-    // Substitui múltiplas vírgulas por uma só
-    const parts = v.split(",");
-    if (parts.length > 2) v = parts[0] + "," + parts.slice(1).join("");
-
-    return v;
-  }
-
-  function parseBRLToNumber(value: string) {
-    // Converte string BRL com vírgula para number
-    return Number(value.replace(".", "").replace(",", "."));
-  }
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "");
+    setAmount(raw);
+  };
 
   function handleSave() {
-    const parsedAmount = parseBRLToNumber(amount);
+    const parsedAmount = Number(amount) / 100;
+
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       alert("Por favor, informe um valor válido maior que zero.");
       return;
@@ -68,7 +53,9 @@ export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: E
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
       <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-[#0A2A4D]">Editar Transação</h2>
+        <h2 className="text-xl font-semibold mb-4 text-[#0A2A4D]">
+          Editar Transação
+        </h2>
 
         <div className="mb-4">
           <Select
@@ -83,8 +70,8 @@ export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: E
           <Input
             label="Valor"
             type="text"
-            value={amount}
-            onChange={(e) => setAmount(formatBRLInput(e.target.value))}
+            value={amount ? formatToBRL(amount) : ""}
+            onChange={handleAmountChange}
             className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
             inputMode="numeric"
             required
@@ -92,19 +79,15 @@ export function EditTransactionModal({ isOpen, transaction, onSave, onClose }: E
           />
         </div>
 
-        <div className="flex justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-[#0A2A4D]"
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Salvar
-          </button>
+        <div className="w-full flex justify-center">
+          <div className="flex justify-end gap-4 w-[60%]">
+            <Button variant="danger" onClick={onClose}>
+              Cancelar
+            </Button>
+            <Button variant="primary" onClick={handleSave}>
+              Salvar
+            </Button>
+          </div>
         </div>
       </div>
     </div>
