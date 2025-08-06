@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
 import clsx from "clsx";
-
-interface IconProps {
-  className?: string;     // controla cor
-  bgColor?: string;       // controla bg
-  size?: string;          // controla tamanho total
-}
+import { IconProps } from "./IconProps";
 
 export function AvatarIcon({
   className = "",
@@ -23,7 +18,7 @@ export function AvatarIcon({
     >
       <span
         className={clsx("material-symbols-outlined", className)}
-          style={{ fontSize: "32px" }} 
+        style={{ fontSize: "32px" }}
       >
         account_circle
       </span>

@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { JsonService } from '../services/jsonService';
+import { TransactionService } from '../services/transactionService';
 import type { Transaction } from '../models/transaction';
 import { TransactionRow } from '@/components/transaction/transactionRow';
 import { EditTransactionModal } from './edit/[id]/page';
 import { PageContainer } from '@/components/pageContainer';
 import { Button } from '@/components/ui/button';
+import { formatToBRL } from '@/utils/format';
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -14,7 +15,7 @@ export default function TransactionsPage() {
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   async function fetchTransactions() {
-    const list = await JsonService.list();
+    const list = TransactionService.list();
     setTransactions(list);
   }
 
@@ -23,10 +24,9 @@ export default function TransactionsPage() {
   }, []);
 
   async function handleDelete(id: number) {
-    await JsonService.delete(id);
+    TransactionService.delete(id);
     setDeleteId(null);
-    // onRefresh();
-    fetchTransactions(); 
+    fetchTransactions();
   }
 
   async function handleSave(updated: {
@@ -34,18 +34,10 @@ export default function TransactionsPage() {
     type: "deposit" | "transfer";
     amount: number;
   }) {
-    await JsonService.update(updated.id, updated);
+    TransactionService.update(updated.id, updated);
     setEditingTransaction(null);
-    // onRefresh();
     fetchTransactions();
   }
-
-  // Formatação de moeda BRL, retornando string como "1.234,56"
-  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    minimumFractionDigits: 2,
-  });
 
   // Cálculo do saldo total
   const balance = transactions.reduce((acc, t) => {
@@ -61,7 +53,7 @@ export default function TransactionsPage() {
       <PageContainer
         variant="highlight"
         title="Transações e Depósitos"
-        subtitle={currencyFormatter.format(balance)}
+        subtitle={formatToBRL(balance)}
       />
 
       {/* Lista de transações com TransactionRow */}
@@ -77,7 +69,7 @@ export default function TransactionsPage() {
                 key={t.id}
                 type={t.type}
                 date={t.date.split("-").reverse().join("/")}
-                amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
+                amount={formatToBRL(t.amount).replace("R$ ", "")}
                 onEdit={() => setEditingTransaction(t)}
                 onDelete={() => setDeleteId(t.id)}
               />

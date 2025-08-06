@@ -5,14 +5,11 @@ import type { TransactionType } from "../app/models/transaction";
 import { Input } from "./ui/input";
 import { Select } from "./ui/select";
 import { Button } from "./ui/button";
+import { formatToBRL } from "../utils/format";
+import { getTodayISO } from "../utils/date";
 
 interface NewTransactionFormProps {
   onAdd: (newTransaction: { type: TransactionType; amount: number; date: string }) => Promise<void>;
-}
-
-function getTodayISO() {
-  const today = new Date();
-  return today.toISOString().split("T")[0];
 }
 
 export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
@@ -24,12 +21,6 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
     { label: "Depósito", value: "deposit", bold: true },
     { label: "Transferência", value: "transfer", bold: true },
   ];
-
-  function formatToBRL(value: string) {
-    const num = Number(value.replace(/\D/g, "")) / 100;
-    if (isNaN(num)) return "";
-    return num.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-  }
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const raw = e.target.value.replace(/\D/g, "");

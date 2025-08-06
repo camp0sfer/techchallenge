@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { JsonService } from './services/jsonService';
+import { TransactionService } from './services/transactionService';
 import NewTransactionForm from '../components/NewTransactionForm';
 import Statement from '../components/Statement';
 import type { Transaction } from './models/transaction';
@@ -13,7 +13,7 @@ export default function HomePage() {
   const [showNotification, setShowNotification] = useState(false);
 
   async function refreshTransactions() {
-    const data = await JsonService.list();
+    const data = await TransactionService.list();
     setTransactions(data);
     setLoading(false);
   }
@@ -36,7 +36,7 @@ export default function HomePage() {
 
   async function handleAddTransaction(transaction: Omit<Transaction, 'id'>) {
     setLoading(true);
-    await JsonService.add(transaction);
+    await TransactionService.add(transaction);
     await refreshTransactions();
     setShowNotification(true);
     setTimeout(() => setShowNotification(false), 3000);

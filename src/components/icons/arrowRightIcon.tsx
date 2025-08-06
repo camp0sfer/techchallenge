@@ -1,14 +1,11 @@
 "use client";
 import React from "react";
-
-interface IconProps {
-  className?: string;
-  bgColor?: string;
-}
+import { IconProps } from "./IconProps";
 
 export function ArrowRightIcon({
   className = "",
   bgColor = "transparent",
+  size,
 }: IconProps) {
   return (
     <div

@@ -1,14 +1,11 @@
 "use client";
 import React from "react";
-
-interface IconProps {
-  className?: string;
-  bgColor?: string;
-}
+import { IconProps } from "./IconProps";
 
 export function ArrowUpIcon({
   className = "",
   bgColor = "bg-feedbackSuccess",
+  size,
 }: IconProps) {
   return (
     <div

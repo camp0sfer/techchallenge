@@ -1,10 +1,12 @@
 import { TransactionRow } from "./transaction/transactionRow";
 import { useEffect, useState } from "react";
-import { JsonService } from "@/app/services/jsonService";
+import { TransactionService } from "@/app/services/transactionService";
 import { EditTransactionModal } from "@/app/transactions/edit/[id]/page";
 import { PageContainer } from "./pageContainer";
 import { Button } from "./ui/button";
 import { Transaction } from "@/app/models/transaction";
+import { formatToBRL } from "@/utils/format";
+import { getTodayISO } from "@/utils/date";
 
 interface StatementProps {
   transactions: Transaction[];
@@ -22,7 +24,7 @@ export default function Statement({
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   async function fetchTransactions() {
-    const list = await JsonService.list();
+    const list = TransactionService.list();
     setTransactions(list);
     onRefresh();
   }
@@ -32,7 +34,7 @@ export default function Statement({
   }, []);
 
   async function handleDelete(id: number) {
-    await JsonService.delete(id);
+    TransactionService.delete(id);
     setDeleteId(null);
     fetchTransactions();
   }
@@ -42,16 +44,10 @@ export default function Statement({
     type: "deposit" | "transfer";
     amount: number;
   }) {
-    await JsonService.update(updated.id, updated);
+    TransactionService.update(updated.id, updated);
     setEditingTransaction(null);
     fetchTransactions();
   }
-
-  const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-    minimumFractionDigits: 2,
-  });
 
   return (
     <PageContainer
@@ -70,7 +66,7 @@ export default function Statement({
               key={t.id}
               type={t.type}
               date={t.date.split("-").reverse().join("/")}
-              amount={currencyFormatter.format(t.amount).replace("R$ ", "")}
+              amount={formatToBRL(t.amount)}
               onEdit={() => setEditingTransaction(t)}
               onDelete={() => setDeleteId(t.id)}
             />

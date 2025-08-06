@@ -1,32 +1,10 @@
+import type { EditTransactionModalProps } from "@/interfaces/componentProps";
 import { TransactionType } from "@/app/models/transaction";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useState, useEffect } from "react";
-
-interface EditTransactionModalProps {
-  isOpen: boolean;
-  transaction: {
-    id: number;
-    type: TransactionType;
-    amount: number; // valor em número
-  } | null;
-  onSave: (updatedTransaction: {
-    id: number;
-    type: TransactionType;
-    amount: number;
-  }) => void;
-  onClose: () => void;
-}
-
-function formatToBRL(value: string): string {
-  const num = Number(value) / 100;
-  if (isNaN(num)) return "";
-  return num.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
-}
+import { formatToBRL } from "@/utils/format";
 
 export function EditTransactionModal({
   isOpen,
