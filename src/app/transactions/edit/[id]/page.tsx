@@ -19,6 +19,15 @@ interface EditTransactionModalProps {
   onClose: () => void;
 }
 
+function formatToBRL(value: string): string {
+  const num = Number(value) / 100;
+  if (isNaN(num)) return "";
+  return num.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
 export function EditTransactionModal({
   isOpen,
   transaction,
@@ -35,28 +44,18 @@ export function EditTransactionModal({
   useEffect(() => {
     if (transaction) {
       setType(transaction.type);
-      setAmount(transaction.amount.toFixed(2).replace(".", ","));
+      setAmount(Math.round(transaction.amount * 100).toString());
     }
   }, [transaction]);
 
-  function formatBRLInput(value: string) {
-    // Remove tudo que não for número ou vírgula
-    let v = value.replace(/[^0-9,]/g, "");
-
-    // Substitui múltiplas vírgulas por uma só
-    const parts = v.split(",");
-    if (parts.length > 2) v = parts[0] + "," + parts.slice(1).join("");
-
-    return v;
-  }
-
-  function parseBRLToNumber(value: string) {
-    // Converte string BRL com vírgula para number
-    return Number(value.replace(".", "").replace(",", "."));
-  }
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "");
+    setAmount(raw);
+  };
 
   function handleSave() {
-    const parsedAmount = parseBRLToNumber(amount);
+    const parsedAmount = Number(amount) / 100;
+
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
       alert("Por favor, informe um valor válido maior que zero.");
       return;
@@ -93,14 +92,15 @@ export function EditTransactionModal({
           <Input
             label="Valor"
             type="text"
-            value={amount}
-            onChange={(e) => setAmount(formatBRLInput(e.target.value))}
+            value={amount ? formatToBRL(amount) : ""}
+            onChange={handleAmountChange}
             className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
             inputMode="numeric"
             required
             placeholder="Digite aqui o valor da transação"
           />
         </div>
+
         <div className="w-full flex justify-center">
           <div className="flex justify-end gap-4 w-[60%]">
             <Button variant="danger" onClick={onClose}>

@@ -59,7 +59,7 @@ export default function NewTransactionForm({ onAdd }: NewTransactionFormProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!amount || Number(amount) <= 0) return;
-    setShowModal(true); // Abre modal ao invés de enviar direto
+    setShowModal(true);
   }
 
   return (
