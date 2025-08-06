@@ -1,5 +1,14 @@
 import "./globals.css";
 import { Header } from "../components/header";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ByteBank",
+  description: "Aplicação de controle financeiro para gerenciar suas transações",
+  icons: {
+    icon: "/favicon_bb.ico",
+  },
+};
 
 export default function RootLayout({
   children,
