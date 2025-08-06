@@ -64,7 +64,7 @@ sectioned: clsx(
         <p className="text-sm text-backgroundPrimary font-jakarta">
           Seu saldo atual é
         </p>
-        <p className="text-[28px] font-bold text-feedbackSuccess font-jakarta">
+        <p className={`text-[28px] font-bold font-jakarta ${Number(subtitle?.replace(/[^\d\-\.]/g, "")) < 0 ? "text-feedbackDanger" : "text-feedbackSuccess"}`}>
           {subtitle}
         </p>
       </div>
@@ -72,7 +72,7 @@ sectioned: clsx(
       {/* Versão desktop: valor na mesma linha */}
       <p className="hidden sm:block text-sm text-backgroundPrimary font-jakarta">
         Seu saldo atual é{" "}
-        <span className="text-feedbackSuccess font-bold text-[36px] font-jakarta">
+        <span className={`font-bold text-[36px] font-jakarta ${Number(subtitle?.replace(/[^\d\-\.]/g, "")) < 0 ? "text-feedbackDanger" : "text-feedbackSuccess"}`}>
           {subtitle}
         </span>
       </p>
