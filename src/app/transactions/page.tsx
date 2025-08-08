@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { TransactionService } from '../services/transactionService';
-import type { Transaction } from '../models/transaction';
-import { TransactionRow } from '@/components/transaction/transactionRow';
-import { EditTransactionModal } from './edit/[id]/page';
 import { PageContainer } from '@/components/pageContainer';
+import { TransactionRow } from '@/components/transaction/transactionRow';
 import { Button } from '@/components/ui/button';
 import { formatToBRL } from '@/utils/format';
+import { useEffect, useState } from 'react';
+import type { Transaction } from '../models/transaction';
+import { TransactionService } from '../services/transactionService';
+import { EditTransactionModal } from './edit/[id]/page';
 
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -48,7 +48,7 @@ export default function TransactionsPage() {
 
   return (
 
-    <main className="min-h-[80vh] bg-[#E6F0FA] p-6 sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[70%] xl:justify-items-center">
+    <main className="min-h-[80vh] bg-[#E6F0FA] p-6 w-full xl:justify-items-center">
       {/* Card superior com saldo */}
       <PageContainer
         variant="highlight"
@@ -69,7 +69,7 @@ export default function TransactionsPage() {
                 key={t.id}
                 type={t.type}
                 date={t.date.split("-").reverse().join("/")}
-                amount={formatToBRL(t.amount).replace("R$ ", "")}
+                amount={formatToBRL(t.amount)}
                 onEdit={() => setEditingTransaction(t)}
                 onDelete={() => setDeleteId(t.id)}
               />

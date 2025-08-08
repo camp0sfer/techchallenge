@@ -43,7 +43,7 @@ export function TransactionRow({
 
         {/* Linha 2: valor + ações (lado a lado) */}
         <div className="flex items-center ml-[10px] gap-3">
-          <span className="font-bold">R$ {amount}</span>
+          <span className="font-bold">{amount}</span>
           <button onClick={onEdit}>
             <EditIcon className="text-textPrimary hover:text-feedbackInfo w-4 h-4" />
           </button>
@@ -68,7 +68,7 @@ export function TransactionRow({
         <span>{date}</span>
 
         {/* Valor */}
-        <span className="font-bold">R$ {amount}</span>
+        <span className="font-bold">{amount}</span>
 
         {/* Ações */}
         <div className="flex gap-2 -ml-[30px]">

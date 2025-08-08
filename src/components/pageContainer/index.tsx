@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
 import clsx from "clsx";
-import { ArrowRightIcon } from "../icons/arrowRightIcon";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
+import { ArrowRightIcon } from "../icons/arrowRightIcon";
 
 type PageContainerVariant = "highlight" | "sectioned" | "form";
 
@@ -118,7 +118,7 @@ sectioned: clsx(
               <h2 className="text-[28px] font-semibold text-[#0A2A4D]">
                 Últimas transações
               </h2>
-              <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+              <div className="flex flex-col md:flex-row justify-between items-center">
 
                 {exibirExtratoLink && (
                   <Link

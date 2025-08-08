@@ -1,11 +1,11 @@
 "use client";
 
+import { PageContainer } from '@/components/pageContainer';
 import { useEffect, useState } from 'react';
-import { TransactionService } from './services/transactionService';
 import NewTransactionForm from '../components/NewTransactionForm';
 import Statement from '../components/Statement';
 import type { Transaction } from './models/transaction';
-import { PageContainer } from '@/components/pageContainer';
+import { TransactionService } from './services/transactionService';
 
 export default function HomePage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -43,7 +43,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-[80vh] bg-[#E6F0FA] p-6 sm:w-[100%] md:w-[100%] lg:w-[100%] xl:w-[100%]">
+    <main className="min-h-[80vh] bg-[#E6F0FA] p-6 w-full">
       {/* Card superior com saldo */}
       <PageContainer
         variant="highlight"
