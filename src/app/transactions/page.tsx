@@ -4,6 +4,7 @@ import { PageContainer } from '@/components/pageContainer';
 import { TransactionRow } from '@/components/transaction/transactionRow';
 import { Button } from '@/components/ui/button';
 import { formatToBRL } from '@/utils/format';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import type { Transaction } from '../models/transaction';
 import { TransactionService } from '../services/transactionService';
@@ -13,6 +14,7 @@ export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const router = useRouter();
 
   async function fetchTransactions() {
     const list = TransactionService.list();
@@ -49,6 +51,10 @@ export default function TransactionsPage() {
   return (
 
     <main className="min-h-[80vh] bg-[#E6F0FA] p-6 w-full xl:justify-items-center">
+      <div className="mb-4 w-full" >
+        <Button variant="secondary" onClick={() => router.push('/')}>Voltar para a Home</Button>
+      </div>
+
       {/* Card superior com saldo */}
       <PageContainer
         variant="highlight"
