@@ -51,9 +51,6 @@ export default function TransactionsPage() {
   return (
 
     <main className="min-h-[80vh] bg-[#E6F0FA] p-6 w-full xl:justify-items-center">
-      <div className="mb-4 w-full" >
-        <Button variant="secondary" onClick={() => router.push('/')}>Voltar para a Home</Button>
-      </div>
 
       {/* Card superior com saldo */}
       <PageContainer
@@ -63,7 +60,7 @@ export default function TransactionsPage() {
       />
 
       {/* Lista de transações com TransactionRow */}
-      <PageContainer variant="sectioned" className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto w-[100%]" exibirExtratoLink={false}>
+      <PageContainer variant="sectioned" className="bg-white rounded-xl shadow-md p-6 max-w-full overflow-x-auto w-[100%]" exibirExtratoLink={false} exibirBotaoVoltar={true}>
         {transactions.length === 0 ? (
           <p className="text-gray-400">Nenhuma transação encontrada.</p>
         ) : (
