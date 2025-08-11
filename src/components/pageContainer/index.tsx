@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { ArrowRightIcon } from "../icons/arrowRightIcon";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 type PageContainerVariant = "highlight" | "sectioned" | "form";
 
@@ -16,6 +18,7 @@ type PageContainerProps = {
   title?: string;
   subtitle?: string;
   exibirExtratoLink?: boolean;
+  exibirBotaoVoltar?: boolean;
 };
 
 export function PageContainer({
@@ -27,7 +30,9 @@ export function PageContainer({
   title,
   subtitle,
   exibirExtratoLink = true,
+  exibirBotaoVoltar = false,
 }: PageContainerProps) {
+  const router = useRouter();
   const baseClasses = "relative p-4 sm:p-10 mb-6 w-full";
   const pathname = usePathname();
 
@@ -127,6 +132,10 @@ sectioned: clsx(
                   >
                     Ver extrato completo →
                   </Link>
+                )}
+
+                {exibirBotaoVoltar && (
+                  <Button variant="primary" onClick={() => router.push('/')}>Voltar para a Home</Button>
                 )}
               </div>
             </div>
