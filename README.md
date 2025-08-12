@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ByteBank
 
-## Getting Started
+Projeto desenvolvido pelo Grupo 15 para o **1# TechChallenge** da pós-tech em Frontend Engineer da FIAP.
 
-First, run the development server:
+## Sobre o Projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O **ByteBank** é uma aplicação web de controle financeiro pessoal, permitindo ao usuário registrar depósitos, realizar transferências e acompanhar o saldo de forma simples e intuitiva. O sistema possui interface moderna, responsiva e fácil de usar.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologias Utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Lucide-react](https://lucide.dev/)
+- [clsx](https://www.npmjs.com/package/clsx)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Como rodar o projeto
 
-## Learn More
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+2. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+3. Acesse [http://localhost:3000](http://localhost:3000) no navegador.
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura do Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/app` – Páginas e rotas principais
+- `/components` – Componentes reutilizáveis
+- `/services` – Serviços de manipulação de dados
+- `/utils` – Funções utilitárias
+- `/public` – Assets estáticos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Links Importantes
 
-## Deploy on Vercel
+- **Figma (Layout do Projeto):** [Link do Figma](https://www.figma.com/proto/O9EAECv2XrsI5ne8CAEzeX/Tech-Challenge--1?node-id=0-1&t=JpYajzaTEiAAgaYQ-1) <!-- Substitua pelo link real do Figma -->
+<!-- **Documentação Next.js:** [https://nextjs.org/docs](https://nextjs.org/docs)
+- **Documentação TailwindCSS:** [https://tailwindcss.com/docs](https://tailwindcss.com/docs)-->
+- **Vídeo de Apresentação:** [Link do vídeo](https://discord.com/channels/@me/1384146397623746560/1404665389597720576) <!-- Substitua pelo link real do vídeo -->
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Integrantes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Julio Magalhães – Gestão de tarefas e vídeo
+- Fernanda – Desenvolvimento da base e estruturação do padrão
+- Priscilla – Criação da biblioteca de componentes
+- Rychard – Desenvolvimento das telas
+- Mauro – Layout no Figma
+
+## Considerações Finais
+
+Este projeto marcou o início da nossa jornada com Next.js e trouxe muitos aprendizados para toda a equipe.  
+Agradecemos à FIAP, professores e colegas pelo apoio!
+
+---
