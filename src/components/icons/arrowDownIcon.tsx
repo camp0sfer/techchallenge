@@ -2,19 +2,19 @@
 import React from "react";
 import { IconProps } from "./IconProps";
 
-export function TrashIcon({
+export function ArrowDownIcon({
   className = "",
-  bgColor = "transparent",
+  bgColor = "bg-feedbackAction",
   size,
 }: IconProps) {
   return (
     <div
-      className={`w-10 h-10 flex items-center justify-center rounded-full ${bgColor}`}
+      className={`inline-flex items-center justify-center w-10 h-10 rounded-full ${bgColor}`}
     >
       <span
         className={`material-symbols-outlined text-xl ${className}`}
       >
-        delete
+        arrow_downward
       </span>
     </div>
   );

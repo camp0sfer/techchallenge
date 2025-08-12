@@ -1,16 +1,37 @@
-import React from 'react';
+"use client";
 
-interface HeaderProps {
+import Image from "next/image";
+import { AvatarIcon } from "../icons/avatarIcon";
+import Link from "next/link";
+
+type HeaderProps = {
   userName: string;
-}
+};
 
-export const Header: React.FC<HeaderProps> = ({ userName }) => {
+export function Header({ userName }: HeaderProps) {
   return (
-    <header className="w-full bg-zinc-900 text-white px-6 py-4 flex justify-end items-center shadow-md">
-            <div className="flex items-center space-x-3">
-            <span className="text-sm md:text-base">{userName}</span>
-            <span>icone</span>
-        </div>
+    <header className="w-full h-[80px] bg-brandSecondary text-backgroundPrimary px-lg py-sm flex items-center justify-between font-inter">
+      {/* Logo */}
+      <Link href="/">
+        <Image
+          src="/logo_bytebank.png"
+          alt="Bytebank Logo"
+          width={180}
+          height={32}
+          priority
+          className="cursor-pointer"
+        />
+      </Link>
+
+      {/* Nome do usuário e avatar */}
+      <div className="flex items-center gap-xs">
+        <span className="text-sm hidden sm:inline">{userName}</span>
+        <AvatarIcon
+          className="text-backgroundPrimary text-[26px]"
+          bgColor="bg-transparent"
+          size="w-[36px] h-[36px]"
+        />
+      </div>
     </header>
   );
-};
+}

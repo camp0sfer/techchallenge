@@ -2,7 +2,7 @@
 import React from "react";
 import { IconProps } from "./IconProps";
 
-export function TrashIcon({
+export function GearIcon({
   className = "",
   bgColor = "transparent",
   size,
@@ -14,7 +14,7 @@ export function TrashIcon({
       <span
         className={`material-symbols-outlined text-xl ${className}`}
       >
-        delete
+        settings
       </span>
     </div>
   );
