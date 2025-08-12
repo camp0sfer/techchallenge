@@ -40,7 +40,7 @@ O **ByteBank** é uma aplicação web de controle financeiro pessoal, permitindo
 - **Figma (Layout do Projeto):** [Link do Figma](https://www.figma.com/proto/O9EAECv2XrsI5ne8CAEzeX/Tech-Challenge--1?node-id=0-1&t=JpYajzaTEiAAgaYQ-1) <!-- Substitua pelo link real do Figma -->
 <!-- **Documentação Next.js:** [https://nextjs.org/docs](https://nextjs.org/docs)
 - **Documentação TailwindCSS:** [https://tailwindcss.com/docs](https://tailwindcss.com/docs)-->
-- **Vídeo de Apresentação:** [Link do vídeo](https://discord.com/channels/@me/1384146397623746560/1404665389597720576) <!-- Substitua pelo link real do vídeo -->
+- **Vídeo de Apresentação:** [Link do vídeo](https://www.youtube.com/watch?v=Wnapxp5u8OM) <!-- Substitua pelo link real do vídeo -->
 
 ## Integrantes
 
