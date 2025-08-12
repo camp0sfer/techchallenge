@@ -44,11 +44,11 @@ O **ByteBank** é uma aplicação web de controle financeiro pessoal, permitindo
 
 ## Integrantes
 
-- Julio Magalhães – Gestão de tarefas e vídeo
-- Fernanda – Desenvolvimento da base e estruturação do padrão
-- Priscilla – Criação da biblioteca de componentes
-- Rychard – Desenvolvimento das telas
-- Mauro – Layout no Figma
+- Julio Magalhães
+- Fernanda
+- Priscilla
+- Rychard
+- Mauro
 
 ## Considerações Finais
 
